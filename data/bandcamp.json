@@ -28,11 +28,107 @@
           "fancollection"
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/FannCollectionBody"
+          "$ref": "#/components/requestBodies/FanCollectionBody"
         },
         "responses": {
-          "405": {
-            "description": "Invalid input"
+          "200": {
+            "description": "The followers"
+          }
+        }
+      }
+    },
+    "/fancollection/1/following_bands": {
+      "post": {
+        "summary": "Get the bands a user is following",
+        "tags": [
+          "fancollection"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/FanCollectionBody"
+        },
+        "responses": {
+          "200": {
+            "description": "The followed bands"
+          }
+        }
+      }
+    },
+    "/fancollection/1/following_fans": {
+      "post": {
+        "summary": "Get the fans a user is following",
+        "tags": [
+          "fancollection"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/FanCollectionBody"
+        },
+        "responses": {
+          "200": {
+            "description": "The followed fans"
+          }
+        }
+      }
+    },
+    "/fancollection/1/collection_items": {
+      "post": {
+        "summary": "Get a user's collection",
+        "tags": [
+          "fancollection"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/FanCollectionBody"
+        },
+        "responses": {
+          "200": {
+            "description": "The collection"
+          }
+        }
+      }
+    },
+    "/fancollection/1/wishlist_items": {
+      "post": {
+        "summary": "Get a user's wishlist",
+        "tags": [
+          "fancollection"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/FanCollectionBody"
+        },
+        "responses": {
+          "200": {
+            "description": "The wishlist"
+          }
+        }
+      }
+    },
+    "/fancollection/1/fan_suggestions": {
+      "post": {
+        "summary": "Get a user's suggestions? Don't know, really.",
+        "tags": [
+          "fancollection"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/FanCollectionBody"
+        },
+        "responses": {
+          "200": {
+            "description": "The suggestions"
+          }
+        }
+      }
+    },
+    "/fancollection/1/gifts_given": {
+      "post": {
+        "summary": "Get the gifts a user has given?? Don't know, really.",
+        "tags": [
+          "fancollection"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/FanCollectionBody"
+        },
+        "responses": {
+          "200": {
+            "description": "The gifts"
           }
         }
       }
@@ -40,7 +136,7 @@
   },
   "components": {
     "requestBodies": {
-      "FannCollectionBody": {
+      "FanCollectionBody": {
         "description": "JSON data of yet to understand data",
         "required": true,
         "content": {
