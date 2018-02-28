@@ -28,7 +28,7 @@
           "fancollection"
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/FanCollectionQuery"
+          "$ref": "#/components/requestBodies/FannCollectionBody"
         },
         "responses": {
           "405": {

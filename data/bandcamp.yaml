@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  description: "bandcamp"
+  version: "1.0.0"
+  title: "Bandcamp"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+servers:
+  - url: https://bandcamp.com/api
+tags:
+  - name: fancollection
+    description: all about your collection
+paths:
+  /fancollection/1/followers:
+    post:
+      summary: "Get a user's followers"
+      tags: 
+        - fancollection
+      requestBody:
+        $ref: "#/components/requestBodies/FannCollectionBody"
+      responses:
+        405:
+          description: "Invalid input"
+components:
+  requestBodies:
+    FannCollectionBody:
+      description: JSON data of yet to understand data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              fan_id:
+                type: integer
+                example: 1234
+              older_than_token:
+                type: string
+                description: The older_than_token string's structure is still unknown to me. It's being used to page through results. The first part of it seems to be some kind of timestamp. Starting with the current time you'd get the last token of the result set, which in turn could be used to fetch more results.
+                example: '1504691191:1603563167:a::'
+              count:
+                type: integer
+                example: 40
+                description: >
+                  The number of items to return. There's no known limit: I've run queries with up to 5000 results. User carefully!
+        
+        
+        
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
