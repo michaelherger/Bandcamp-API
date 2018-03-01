@@ -14,18 +14,104 @@
       "url": "https://bandcamp.com/api"
     }
   ],
-  "tags": [
-    {
-      "name": "fancollection",
-      "description": "all about your collection"
-    }
-  ],
   "paths": {
+    "/band/3/search": {
+      "get": {
+        "summary": "Search for bands.",
+        "tags": [
+          "Bands"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "band_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the bands"
+          }
+        }
+      }
+    },
+    "/band/3/discography": {
+      "get": {
+        "summary": "Get a band's discography.",
+        "tags": [
+          "Bands"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the bands"
+          }
+        }
+      }
+    },
+    "/album/2/info": {
+      "get": {
+        "summary": "Get album information.",
+        "tags": [
+          "Albums"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "album_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the album"
+          }
+        }
+      }
+    },
+    "/track/3/info": {
+      "get": {
+        "summary": "Get track information.",
+        "tags": [
+          "Tracks"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "track_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the tracks"
+          }
+        }
+      }
+    },
     "/fancollection/1/followers": {
       "post": {
         "summary": "Get a user's followers",
         "tags": [
-          "fancollection"
+          "Fan Collection"
         ],
         "requestBody": {
           "$ref": "#/components/requestBodies/FanCollectionBody"
@@ -41,7 +127,7 @@
       "post": {
         "summary": "Get the bands a user is following",
         "tags": [
-          "fancollection"
+          "Fan Collection"
         ],
         "requestBody": {
           "$ref": "#/components/requestBodies/FanCollectionBody"
@@ -57,7 +143,7 @@
       "post": {
         "summary": "Get the fans a user is following",
         "tags": [
-          "fancollection"
+          "Fan Collection"
         ],
         "requestBody": {
           "$ref": "#/components/requestBodies/FanCollectionBody"
@@ -73,7 +159,7 @@
       "post": {
         "summary": "Get a user's collection",
         "tags": [
-          "fancollection"
+          "Fan Collection"
         ],
         "requestBody": {
           "$ref": "#/components/requestBodies/FanCollectionBody"
@@ -89,7 +175,7 @@
       "post": {
         "summary": "Get a user's wishlist",
         "tags": [
-          "fancollection"
+          "Fan Collection"
         ],
         "requestBody": {
           "$ref": "#/components/requestBodies/FanCollectionBody"
@@ -105,7 +191,7 @@
       "post": {
         "summary": "Get a user's suggestions? Don't know, really.",
         "tags": [
-          "fancollection"
+          "Fan Collection"
         ],
         "requestBody": {
           "$ref": "#/components/requestBodies/FanCollectionBody"
@@ -121,7 +207,7 @@
       "post": {
         "summary": "Get the gifts a user has given?? Don't know, really.",
         "tags": [
-          "fancollection"
+          "Fan Collection"
         ],
         "requestBody": {
           "$ref": "#/components/requestBodies/FanCollectionBody"
@@ -129,6 +215,91 @@
         "responses": {
           "200": {
             "description": "The gifts"
+          }
+        }
+      }
+    },
+    "/url/1/info": {
+      "get": {
+        "summary": "Get information about content on a given bandcamp.com URL.",
+        "tags": [
+          "URLs"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "url",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the information"
+          }
+        }
+      }
+    },
+    "/http://f0.bcbits.com/img/{type}/{id}/{format}": {
+      "get": {
+        "summary": "Constructor to get various pieces of artwork.",
+        "description": "Not really another endpoint, but its own server... here for completeness' sake.",
+        "tags": [
+          "Artwork"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "type",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "a",
+                "t",
+                "p"
+              ]
+            },
+            "description": "- a: Album artwork\n- t: Track artwork\n- p: merchandising? Not sure about this one",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "format",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                7,
+                8,
+                9,
+                20,
+                22,
+                41,
+                42
+              ]
+            },
+            "description": "An integer defining the resulting size. One of the following:\n- 0 => original (size & format, don't use extension)\n- 1 => fullsize (dito, use .original?, even heavier?!?)\n- 2 => 350x350 jpg\n- 3 => 100x100 jpg\n- 4 => 300x300 jpg\n- 5 => 700x700 jpg\n- 7 => 150x150 jpg\n- 8 => 124x124 jpg\n- 9 => 210x210 jpg\n\nNon-artwork related, but working?\n- 20 => 1024x1024 jpg\n- 22 => 25x25 jpg\n- 41 => 210x210 jpg\n- 42 => 50x50 jpg",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the artwork"
           }
         }
       }

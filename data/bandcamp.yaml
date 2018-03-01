@@ -1,87 +1,218 @@
 openapi: 3.0.0
 info:
-  description: "bandcamp"
-  version: "1.0.0"
-  title: "Bandcamp"
+  description: bandcamp
+  version: 1.0.0
+  title: Bandcamp
   license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 servers:
-  - url: https://bandcamp.com/api
-tags:
-  - name: fancollection
-    description: all about your collection
+  - url: 'https://bandcamp.com/api'
 paths:
+  /band/3/search:
+    get:
+      summary: Search for bands.
+      tags: 
+        - Bands
+      parameters: 
+        - in: query
+          name: band_id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: the bands
+  /band/3/discography:
+    get:
+      summary: Get a band's discography.
+      tags: 
+        - Bands
+      parameters: 
+        - in: query
+          name: name
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: the bands
+  /album/2/info:
+    get:
+      summary: Get album information.
+      tags: 
+        - Albums
+      parameters: 
+        - in: query
+          name: album_id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: the album
+  /track/3/info:
+    get:
+      summary: Get track information.
+      tags: 
+        - Tracks
+      parameters: 
+        - in: query
+          name: track_id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: the tracks
   /fancollection/1/followers:
     post:
-      summary: "Get a user's followers"
-      tags: 
-        - fancollection
+      summary: Get a user's followers
+      tags:
+        - Fan Collection
       requestBody:
-        $ref: "#/components/requestBodies/FanCollectionBody"
+        $ref: '#/components/requestBodies/FanCollectionBody'
       responses:
-        200:
-          description: "The followers"
+        '200':
+          description: The followers
   /fancollection/1/following_bands:
     post:
-      summary: "Get the bands a user is following"
-      tags: 
-        - fancollection
+      summary: Get the bands a user is following
+      tags:
+        - Fan Collection
       requestBody:
-        $ref: "#/components/requestBodies/FanCollectionBody"
+        $ref: '#/components/requestBodies/FanCollectionBody'
       responses:
-        200:
-          description: "The followed bands"
+        '200':
+          description: The followed bands
   /fancollection/1/following_fans:
     post:
-      summary: "Get the fans a user is following"
-      tags: 
-        - fancollection
+      summary: Get the fans a user is following
+      tags:
+        - Fan Collection
       requestBody:
-        $ref: "#/components/requestBodies/FanCollectionBody"
+        $ref: '#/components/requestBodies/FanCollectionBody'
       responses:
-        200:
-          description: "The followed fans"
+        '200':
+          description: The followed fans
   /fancollection/1/collection_items:
     post:
-      summary: "Get a user's collection"
-      tags: 
-        - fancollection
+      summary: Get a user's collection
+      tags:
+        - Fan Collection
       requestBody:
-        $ref: "#/components/requestBodies/FanCollectionBody"
+        $ref: '#/components/requestBodies/FanCollectionBody'
       responses:
-        200:
-          description: "The collection"
+        '200':
+          description: The collection
   /fancollection/1/wishlist_items:
     post:
-      summary: "Get a user's wishlist"
-      tags: 
-        - fancollection
+      summary: Get a user's wishlist
+      tags:
+        - Fan Collection
       requestBody:
-        $ref: "#/components/requestBodies/FanCollectionBody"
+        $ref: '#/components/requestBodies/FanCollectionBody'
       responses:
-        200:
-          description: "The wishlist"
+        '200':
+          description: The wishlist
   /fancollection/1/fan_suggestions:
     post:
-      summary: "Get a user's suggestions? Don't know, really."
-      tags: 
-        - fancollection
+      summary: 'Get a user''s suggestions? Don''t know, really.'
+      tags:
+        - Fan Collection
       requestBody:
-        $ref: "#/components/requestBodies/FanCollectionBody"
+        $ref: '#/components/requestBodies/FanCollectionBody'
       responses:
-        200:
-          description: "The suggestions"
+        '200':
+          description: The suggestions
   /fancollection/1/gifts_given:
     post:
-      summary: "Get the gifts a user has given?? Don't know, really."
-      tags: 
-        - fancollection
+      summary: 'Get the gifts a user has given?? Don''t know, really.'
+      tags:
+        - Fan Collection
       requestBody:
-        $ref: "#/components/requestBodies/FanCollectionBody"
+        $ref: '#/components/requestBodies/FanCollectionBody'
       responses:
-        200:
-          description: "The gifts"
+        '200':
+          description: The gifts
+  /url/1/info:
+    get:
+      summary: Get information about content on a given bandcamp.com URL.
+      tags:
+        - URLs
+      parameters: 
+        - in: query
+          name: url
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: the information
+  /http://f0.bcbits.com/img/{type}/{id}/{format}:
+    get:
+      summary: Constructor to get various pieces of artwork. 
+      description: Not really another endpoint, but its own server... here for completeness' sake.
+      tags:
+        - Artwork
+      parameters: 
+        - in: path
+          name: type
+          schema:
+            type: string
+            enum: [a,t,p]
+          description: >- 
+            - a: Album artwork
+            
+            - t: Track artwork
+            
+            - p: merchandising? Not sure about this one
+          required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: format
+          schema:
+            type: integer
+            enum: [0,1,2,3,4,5,7,8,9,20,22,41,42]
+          description: >-
+            An integer defining the resulting size. One of the following:
+
+            - 0 => original (size & format, don't use extension)
+            
+            - 1 => fullsize (dito, use .original?, even heavier?!?)
+            
+            - 2 => 350x350 jpg
+            
+            - 3 => 100x100 jpg
+            
+            - 4 => 300x300 jpg
+    
+            - 5 => 700x700 jpg
+    
+            - 7 => 150x150 jpg
+    
+            - 8 => 124x124 jpg
+    
+            - 9 => 210x210 jpg
+            
+            
+            Non-artwork related, but working?
+    
+            - 20 => 1024x1024 jpg
+    
+            - 22 => 25x25 jpg
+            
+            - 41 => 210x210 jpg
+    
+            - 42 => 50x50 jpg
+          required: true
+      responses:
+        '200':
+          description: the artwork
 components:
   requestBodies:
     FanCollectionBody:
@@ -97,16 +228,19 @@ components:
                 example: 1234
               older_than_token:
                 type: string
-                description: The older_than_token string's structure is still unknown to me. It's being used to page through results. The first part of it seems to be some kind of timestamp. Starting with the current time you'd get the last token of the result set, which in turn could be used to fetch more results.
+                description: >-
+                  The older_than_token string's structure is still unknown to
+                  me. It's being used to page through results. The first part of
+                  it seems to be some kind of timestamp. Starting with the
+                  current time you'd get the last token of the result set, which
+                  in turn could be used to fetch more results.
                 example: '1504691191:1603563167:a::'
               count:
                 type: integer
                 example: 40
                 description: >
-                  The number of items to return. There's no known limit: I've run queries with up to 5000 results. User carefully!
-        
-        
-        
+                  The number of items to return. There's no known limit: I've
+                  run queries with up to 5000 results. User carefully!
 externalDocs:
-  description: "Find out more about Swagger"
-  url: "http://swagger.io"
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
