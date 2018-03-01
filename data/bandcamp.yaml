@@ -3,11 +3,11 @@ info:
   description: bandcamp
   version: 1.0.0
   title: Bandcamp
-  license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 servers:
-  - url: 'https://bandcamp.com/api'
+  - url: https://bandcamp.com/api
+    description: API endpoint. Does NOT serve any artwork.
+  - url: https://f0.bcbits.com
+    description: Artwork serving & resizing. Does NOT serve the API. f0 can vary to f1, f4 etc.
 paths:
   /band/3/search:
     get:
@@ -149,10 +149,10 @@ paths:
       responses:
         '200':
           description: the information
-  /http://f0.bcbits.com/img/{type}/{id}/{format}:
+  /img/{type}{id}_{format}.jpg:
     get:
-      summary: Constructor to get various pieces of artwork. 
-      description: Not really another endpoint, but its own server... here for completeness' sake.
+      summary: Endpoint on https://f0.bcbits.com/ to get various pieces of artwork. 
+      description: Not really another endpoint, but its own server... here for completeness' sake. *Make sure you use this on https://f0.bcbits.com/!*
       tags:
         - Artwork
       parameters: 
@@ -168,11 +168,14 @@ paths:
             
             - p: merchandising? Not sure about this one
           required: true
+          example: a
         - in: path
           name: id
           schema:
             type: string
+          description: The image ID is left padded with 0 and then truncated to 10 characters.
           required: true
+          example: 1386391961
         - in: path
           name: format
           schema:
@@ -199,6 +202,8 @@ paths:
     
             - 9 => 210x210 jpg
             
+            - 10 => 1200x1200 jpg
+            
             
             Non-artwork related, but working?
     
@@ -210,9 +215,15 @@ paths:
     
             - 42 => 50x50 jpg
           required: true
+          example: 2
       responses:
         '200':
           description: the artwork
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
 components:
   requestBodies:
     FanCollectionBody:

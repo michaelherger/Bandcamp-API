@@ -3,15 +3,16 @@
   "info": {
     "description": "bandcamp",
     "version": "1.0.0",
-    "title": "Bandcamp",
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    }
+    "title": "Bandcamp"
   },
   "servers": [
     {
-      "url": "https://bandcamp.com/api"
+      "url": "https://bandcamp.com/api",
+      "description": "API endpoint. Does NOT serve any artwork."
+    },
+    {
+      "url": "https://f0.bcbits.com",
+      "description": "Artwork serving & resizing. Does NOT serve the API. f0 can vary to f1, f4 etc."
     }
   ],
   "paths": {
@@ -242,10 +243,10 @@
         }
       }
     },
-    "/http://f0.bcbits.com/img/{type}/{id}/{format}": {
+    "/img/{type}{id}_{format}.jpg": {
       "get": {
-        "summary": "Constructor to get various pieces of artwork.",
-        "description": "Not really another endpoint, but its own server... here for completeness' sake.",
+        "summary": "Endpoint on https://f0.bcbits.com/ to get various pieces of artwork.",
+        "description": "Not really another endpoint, but its own server... here for completeness' sake. *Make sure you use this on https://f0.bcbits.com/!*",
         "tags": [
           "Artwork"
         ],
@@ -262,7 +263,8 @@
               ]
             },
             "description": "- a: Album artwork\n- t: Track artwork\n- p: merchandising? Not sure about this one",
-            "required": true
+            "required": true,
+            "example": "a"
           },
           {
             "in": "path",
@@ -270,7 +272,9 @@
             "schema": {
               "type": "string"
             },
-            "required": true
+            "description": "The image ID is left padded with 0 and then truncated to 10 characters.",
+            "required": true,
+            "example": 1386391961
           },
           {
             "in": "path",
@@ -293,13 +297,22 @@
                 42
               ]
             },
-            "description": "An integer defining the resulting size. One of the following:\n- 0 => original (size & format, don't use extension)\n- 1 => fullsize (dito, use .original?, even heavier?!?)\n- 2 => 350x350 jpg\n- 3 => 100x100 jpg\n- 4 => 300x300 jpg\n- 5 => 700x700 jpg\n- 7 => 150x150 jpg\n- 8 => 124x124 jpg\n- 9 => 210x210 jpg\n\nNon-artwork related, but working?\n- 20 => 1024x1024 jpg\n- 22 => 25x25 jpg\n- 41 => 210x210 jpg\n- 42 => 50x50 jpg",
-            "required": true
+            "description": "An integer defining the resulting size. One of the following:\n- 0 => original (size & format, don't use extension)\n- 1 => fullsize (dito, use .original?, even heavier?!?)\n- 2 => 350x350 jpg\n- 3 => 100x100 jpg\n- 4 => 300x300 jpg\n- 5 => 700x700 jpg\n- 7 => 150x150 jpg\n- 8 => 124x124 jpg\n- 9 => 210x210 jpg\n- 10 => 1200x1200 jpg\n\nNon-artwork related, but working?\n- 20 => 1024x1024 jpg\n- 22 => 25x25 jpg\n- 41 => 210x210 jpg\n- 42 => 50x50 jpg",
+            "required": true,
+            "example": 2
           }
         ],
         "responses": {
           "200": {
-            "description": "the artwork"
+            "description": "the artwork",
+            "content": {
+              "image/*": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
           }
         }
       }
