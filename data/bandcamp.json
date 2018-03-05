@@ -316,6 +316,120 @@
           }
         }
       }
+    },
+    "/salesfeed/1/get": {
+      "get": {
+        "summary": "get currently selling items",
+        "tags": [
+          "Editorial"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_date",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "timestamp of the moment you want sales data from"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a list of currently selling albums"
+          }
+        }
+      }
+    },
+    "/discover/3/get_web": {
+      "get": {
+        "summary": "get a list of discovery items",
+        "description": "get a list of discovery items: `top` selling, staff `pic`ks, `new` arrivals, `most` recommended",
+        "tags": [
+          "Editorial"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "p",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Page?"
+          },
+          {
+            "in": "query",
+            "name": "s",
+            "schema": {
+              "$ref": "#/components/schemas/DiscoveryType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total_count": {
+                      "type": "integer"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Album"
+                      }
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "example": "05 Mar 2018 16:52:23 GMT"
+                    },
+                    "data_sig": {
+                      "$ref": "#/components/schemas/UnknownProperty"
+                    },
+                    "spec_id": {
+                      "$ref": "#/components/schemas/UnknownProperty"
+                    },
+                    "ui_sig": {
+                      "$ref": "#/components/schemas/UnknownProperty"
+                    },
+                    "args": {
+                      "type": "object",
+                      "properties": {
+                        "s": {
+                          "$ref": "#/components/schemas/DiscoveryType"
+                        },
+                        "p": {
+                          "type": "integer"
+                        },
+                        "g": {
+                          "type": "string",
+                          "example": "all"
+                        },
+                        "r": {
+                          "$ref": "#/components/schemas/UnknownProperty"
+                        },
+                        "following": {
+                          "type": "boolean",
+                          "description": "wheter a user is following this item or not"
+                        },
+                        "w": {
+                          "type": "integer"
+                        },
+                        "f": {
+                          "type": "string",
+                          "example": "all"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -340,12 +454,185 @@
                 "count": {
                   "type": "integer",
                   "example": 40,
-                  "description": "The number of items to return. There's no known limit: I've run queries with up to 5000 results. User carefully!\n"
+                  "description": "The number of items to return. There's no known limit: I've run queries with up to 5000 results. Use carefully!\n"
                 }
               }
             }
           }
         }
+      }
+    },
+    "schemas": {
+      "Album": {
+        "type": "object",
+        "description": "an album object",
+        "properties": {
+          "primary_text": {
+            "type": "string",
+            "description": "the primary text to be shown with an item, eg its albun title",
+            "example": "The Cochlear Album 2: Pan's Poison"
+          },
+          "secondary_text": {
+            "$ref": "#/components/schemas/UnknownProperty",
+            "example": "TESD4Implants2"
+          },
+          "id": {
+            "type": "integer",
+            "example": 3672525499
+          },
+          "package_title": {
+            "type": "string",
+            "$ref": "#/components/schemas/UnknownProperty"
+          },
+          "genre_text": {
+            "type": "string",
+            "description": "some genre description, afaik pretty much free form",
+            "example": "podcasts"
+          },
+          "art_id": {
+            "type": "integer",
+            "description": "the artwork ID",
+            "example": 1383920248
+          },
+          "alt_art_image_id": {
+            "type": "integer"
+          },
+          "band_id": {
+            "type": "integer",
+            "example": 245993618,
+            "description": "the album artist"
+          },
+          "bio_image": {
+            "type": "object",
+            "properties": {
+              "width": {
+                "type": "integer"
+              },
+              "image_id": {
+                "type": "integer"
+              },
+              "height": {
+                "type": "integer"
+              }
+            }
+          },
+          "featured_track": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "The Cochlear Album 2: Pan’s Poison Sample"
+              },
+              "id": {
+                "type": "integer",
+                "example": 3056958565
+              },
+              "encodings_id": {
+                "$ref": "#/components/schemas/UnknownProperty"
+              },
+              "duration": {
+                "type": "number",
+                "example": 60.694
+              },
+              "file": {
+                "type": "object",
+                "properties": {
+                  "mp3-128": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                }
+              }
+            }
+          },
+          "category": {
+            "$ref": "#/components/schemas/UnknownProperty",
+            "example": "solr_hack"
+          },
+          "package_art1": {
+            "$ref": "#/components/schemas/UnknownProperty"
+          },
+          "package_art2": {
+            "$ref": "#/components/schemas/UnknownProperty"
+          },
+          "package_art3": {
+            "$ref": "#/components/schemas/UnknownProperty"
+          },
+          "package_art4": {
+            "$ref": "#/components/schemas/UnknownProperty"
+          },
+          "publish_date": {
+            "type": "string",
+            "example": "05 Mar 2018 04:55:34 GMT"
+          },
+          "item_type_id": {
+            "$ref": "#/components/schemas/UnknownProperty",
+            "example": "a3672525499solr_hack"
+          },
+          "is_preorder": {
+            "type": "boolean"
+          },
+          "recommendations": {
+            "$ref": "#/components/schemas/UnknownProperty"
+          },
+          "url_hints": {
+            "type": "object",
+            "properties": {
+              "custom_domain_verified": {
+                "$ref": "#/components/schemas/UnknownProperty"
+              },
+              "custom_domain": {
+                "type": "string",
+                "description": "an artist's own, custom domain name"
+              },
+              "subdomain": {
+                "type": "string",
+                "description": "the artist's subdomain on bandcamp.com",
+                "example": "tesdimplants2"
+              },
+              "item_type": {
+                "type": "string",
+                "enum": [
+                  "a"
+                ],
+                "description": "the type can be `a`lbum"
+              },
+              "slug": {
+                "type": "string",
+                "example": "the-cochlear-album-2-pans-poison"
+              }
+            }
+          },
+          "location_text": {
+            "type": "string",
+            "example": "New York, New York"
+          },
+          "extras": {
+            "$ref": "#/components/schemas/UnknownProperty"
+          },
+          "score": {
+            "type": "number",
+            "$ref": "#/components/schemas/UnknownProperty"
+          },
+          "type": {
+            "type": "string",
+            "description": "`a` for Album",
+            "example": "a"
+          }
+        }
+      },
+      "DiscoveryType": {
+        "type": "string",
+        "enum": [
+          "top",
+          "pic",
+          "new",
+          "most"
+        ]
+      },
+      "UnknownProperty": {
+        "type": "string",
+        "description": "unknown?"
       }
     }
   },
