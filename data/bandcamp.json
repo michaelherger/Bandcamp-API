@@ -335,7 +335,62 @@
         ],
         "responses": {
           "200": {
-            "description": "a list of currently selling albums"
+            "description": "a list of currently selling albums",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "server_time": {
+                      "$ref": "#/components/schemas/Timestamp"
+                    },
+                    "end_date": {
+                      "$ref": "#/components/schemas/Timestamp"
+                    },
+                    "data_delay_sec": {
+                      "$ref": "#/components/schemas/UnknownProperty"
+                    },
+                    "events": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "$ref": "#/components/schemas/SaleEvent"
+                          },
+                          {
+                            "$ref": "#/components/schemas/DownloadEvent"
+                          }
+                        ]
+                      }
+                    },
+                    "start_date": {
+                      "$ref": "#/components/schemas/Timestamp"
+                    },
+                    "home_page_values": {
+                      "type": "object",
+                      "properties": {
+                        "sales_count_all_time": {
+                          "$ref": "#/components/schemas/UnknownProperty",
+                          "example": 40981326
+                        },
+                        "downloads_count_all_time": {
+                          "$ref": "#/components/schemas/UnknownProperty",
+                          "example": 182798723
+                        },
+                        "revenue_total": {
+                          "$ref": "#/components/schemas/UnknownProperty",
+                          "example": 277276436
+                        },
+                        "revenue_30d": {
+                          "$ref": "#/components/schemas/UnknownProperty",
+                          "example": 7291052
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -490,12 +545,10 @@
             "example": "podcasts"
           },
           "art_id": {
-            "type": "integer",
-            "description": "the artwork ID",
-            "example": 1383920248
+            "$ref": "#/components/schemas/ArtworkID"
           },
           "alt_art_image_id": {
-            "type": "integer"
+            "$ref": "#/components/schemas/ArtworkID"
           },
           "band_id": {
             "type": "integer",
@@ -621,6 +674,135 @@
           }
         }
       },
+      "DownloadEvent": {
+        "type": "object",
+        "description": "a download event",
+        "properties": {
+          "utc_date": {
+            "type": "number"
+          },
+          "event_type": {
+            "type": "string",
+            "enum": [
+              "download"
+            ]
+          }
+        }
+      },
+      "SaleEvent": {
+        "type": "object",
+        "description": "a sale event, can have multiple sales",
+        "properties": {
+          "utc_date": {
+            "type": "number"
+          },
+          "event_type": {
+            "type": "string",
+            "enum": [
+              "sale"
+            ],
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SaleItem"
+              }
+            }
+          }
+        }
+      },
+      "SaleItem": {
+        "type": "object",
+        "description": "an item sold",
+        "properties": {
+          "utc_date": {
+            "type": "number"
+          },
+          "amount_paid_fmt": {
+            "type": "string",
+            "description": "formatted amount paid for the item",
+            "example": "$6 CAD"
+          },
+          "amount_paid": {
+            "type": "number",
+            "example": 6
+          },
+          "currency": {
+            "type": "string",
+            "description": "three character currency description",
+            "example": "CAD"
+          },
+          "amount_paid_usd": {
+            "type": "number",
+            "description": "the paid amount in USD",
+            "example": 4.64
+          },
+          "art_id": {
+            "$ref": "#/components/schemas/ArtworkID"
+          },
+          "package_image_id": {
+            "$ref": "#/components/schemas/UnknownProperty"
+          },
+          "item_description": {
+            "type": "string",
+            "description": "Cast of Static and Smoke"
+          },
+          "track_album_slug_text": {
+            "type": "string"
+          },
+          "artist_name": {
+            "type": "string",
+            "description": "Vile Creature"
+          },
+          "slug_type": {
+            "type": "string",
+            "description": "`a` for artist etc.?",
+            "example": "a"
+          },
+          "releases": {
+            "$ref": "#/components/schemas/UnknownProperty"
+          },
+          "country_code": {
+            "type": "string",
+            "example": "us"
+          },
+          "item_type": {
+            "$ref": "#/components/schemas/ItemType"
+          },
+          "item_price": {
+            "type": "number"
+          },
+          "country": {
+            "type": "string",
+            "example": "United States"
+          },
+          "art_url": {
+            "type": "string",
+            "format": "URL",
+            "example": "https://f4.bcbits.com/img/a2973040303_7.jpg"
+          },
+          "album_title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "URL",
+            "description": "the URL where the item can be found",
+            "example": "//vilecreature.bandcamp.com/album/cast-of-static-and-smoke"
+          }
+        }
+      },
+      "ArtworkID": {
+        "type": "integer",
+        "description": "the artwork ID",
+        "example": 1383920248
+      },
+      "ItemType": {
+        "type": "string",
+        "enum": [
+          "a"
+        ],
+        "description": "the type can be `a`lbum"
+      },
       "DiscoveryType": {
         "type": "string",
         "enum": [
@@ -629,6 +811,11 @@
           "new",
           "most"
         ]
+      },
+      "Timestamp": {
+        "type": "integer",
+        "description": "a timestamp in unix time",
+        "example": 1520400480
       },
       "UnknownProperty": {
         "type": "string",

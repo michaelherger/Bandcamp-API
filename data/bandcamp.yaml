@@ -4,17 +4,19 @@ info:
   version: 1.0.0
   title: Bandcamp
 servers:
-  - url: https://bandcamp.com/api
+  - url: 'https://bandcamp.com/api'
     description: API endpoint. Does NOT serve any artwork.
-  - url: https://f0.bcbits.com
-    description: Artwork serving & resizing. Does NOT serve the API. f0 can vary to f1, f4 etc.
+  - url: 'https://f0.bcbits.com'
+    description: >-
+      Artwork serving & resizing. Does NOT serve the API. f0 can vary to f1, f4
+      etc.
 paths:
   /band/3/search:
     get:
       summary: Search for bands.
-      tags: 
+      tags:
         - Bands
-      parameters: 
+      parameters:
         - in: query
           name: band_id
           schema:
@@ -26,9 +28,9 @@ paths:
   /band/3/discography:
     get:
       summary: Get a band's discography.
-      tags: 
+      tags:
         - Bands
-      parameters: 
+      parameters:
         - in: query
           name: name
           schema:
@@ -40,9 +42,9 @@ paths:
   /album/2/info:
     get:
       summary: Get album information.
-      tags: 
+      tags:
         - Albums
-      parameters: 
+      parameters:
         - in: query
           name: album_id
           schema:
@@ -54,9 +56,9 @@ paths:
   /track/3/info:
     get:
       summary: Get track information.
-      tags: 
+      tags:
         - Tracks
-      parameters: 
+      parameters:
         - in: query
           name: track_id
           schema:
@@ -140,7 +142,7 @@ paths:
       summary: Get information about content on a given bandcamp.com URL.
       tags:
         - URLs
-      parameters: 
+      parameters:
         - in: query
           name: url
           schema:
@@ -149,23 +151,26 @@ paths:
       responses:
         '200':
           description: the information
-  /img/{type}{id}_{format}.jpg:
+  '/img/{type}{id}_{format}.jpg':
     get:
-      summary: Endpoint on https://f0.bcbits.com/ to get various pieces of artwork. 
-      description: Not really another endpoint, but its own server... here for completeness' sake. *Make sure you use this on https://f0.bcbits.com/!*
+      summary: 'Endpoint on https://f0.bcbits.com/ to get various pieces of artwork.'
+      description: >-
+        Not really another endpoint, but its own server... here for
+        completeness' sake. *Make sure you use this on https://f0.bcbits.com/!*
       tags:
         - Artwork
-      parameters: 
+      parameters:
         - in: path
           name: type
           schema:
             type: string
-            enum: [a,t,p]
-          description: >- 
+            enum:
+              - a
+              - t
+              - p
+          description: |-
             - a: Album artwork
-            
             - t: Track artwork
-            
             - p: merchandising? Not sure about this one
           required: true
           example: a
@@ -173,46 +178,46 @@ paths:
           name: id
           schema:
             type: string
-          description: The image ID is left padded with 0 and then truncated to 10 characters.
+          description: >-
+            The image ID is left padded with 0 and then truncated to 10
+            characters.
           required: true
           example: 1386391961
         - in: path
           name: format
           schema:
             type: integer
-            enum: [0,1,2,3,4,5,7,8,9,20,22,41,42]
-          description: >-
+            enum:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 7
+              - 8
+              - 9
+              - 20
+              - 22
+              - 41
+              - 42
+          description: |-
             An integer defining the resulting size. One of the following:
-
             - 0 => original (size & format, don't use extension)
-            
             - 1 => fullsize (dito, use .original?, even heavier?!?)
-            
             - 2 => 350x350 jpg
-            
             - 3 => 100x100 jpg
-            
             - 4 => 300x300 jpg
-    
             - 5 => 700x700 jpg
-    
             - 7 => 150x150 jpg
-    
             - 8 => 124x124 jpg
-    
             - 9 => 210x210 jpg
-            
             - 10 => 1200x1200 jpg
-            
-            
+
             Non-artwork related, but working?
-    
             - 20 => 1024x1024 jpg
-    
             - 22 => 25x25 jpg
-            
             - 41 => 210x210 jpg
-    
             - 42 => 50x50 jpg
           required: true
           example: 2
@@ -238,11 +243,46 @@ paths:
       responses:
         '200':
           description: a list of currently selling albums
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server_time: 
+                    $ref: '#/components/schemas/Timestamp'
+                  end_date:
+                    $ref: '#/components/schemas/Timestamp'
+                  data_delay_sec: 
+                    $ref: '#/components/schemas/UnknownProperty'
+                  events:
+                    type: array
+                    items:
+                      anyOf:
+                        - $ref: '#/components/schemas/SaleEvent'
+                        - $ref: '#/components/schemas/DownloadEvent'
+                  start_date:
+                    $ref: '#/components/schemas/Timestamp'
+                  home_page_values:
+                    type: object
+                    properties:
+                      sales_count_all_time:
+                        $ref: '#/components/schemas/UnknownProperty'
+                        example: 40981326
+                      downloads_count_all_time:
+                        $ref: '#/components/schemas/UnknownProperty'
+                        example: 182798723
+                      revenue_total:
+                        $ref: '#/components/schemas/UnknownProperty'
+                        example: 277276436
+                      revenue_30d: 
+                        $ref: '#/components/schemas/UnknownProperty'
+                        example: 7291052
   /discover/3/get_web:
     get:
       summary: get a list of discovery items
       description: >-
-        get a list of discovery items: `top` selling, staff `pic`ks, `new` arrivals, `most` recommended
+        get a list of discovery items: `top` selling, staff `pic`ks, `new`
+        arrivals, `most` recommended
       tags:
         - Editorial
       parameters:
@@ -271,7 +311,7 @@ paths:
                       $ref: '#/components/schemas/Album'
                   timestamp:
                     type: string
-                    example: 05 Mar 2018 16:52:23 GMT
+                    example: '05 Mar 2018 16:52:23 GMT'
                   data_sig:
                     $ref: '#/components/schemas/UnknownProperty'
                   spec_id:
@@ -281,7 +321,7 @@ paths:
                   args:
                     type: object
                     properties:
-                      s: 
+                      s:
                         $ref: '#/components/schemas/DiscoveryType'
                       p:
                         type: integer
@@ -293,7 +333,7 @@ paths:
                       following:
                         type: boolean
                         description: wheter a user is following this item or not
-                      w: 
+                      w:
                         type: integer
                       f:
                         type: string
@@ -331,31 +371,28 @@ components:
       type: object
       description: an album object
       properties:
-        primary_text: 
+        primary_text:
           type: string
-          description: the primary text to be shown with an item, eg its albun title
-          example: >-
-            The Cochlear Album 2: Pan's Poison
-        secondary_text: 
+          description: 'the primary text to be shown with an item, eg its albun title'
+          example: 'The Cochlear Album 2: Pan''s Poison'
+        secondary_text:
           $ref: '#/components/schemas/UnknownProperty'
           example: TESD4Implants2
-        id: 
+        id:
           type: integer
           example: 3672525499
-        package_title: 
+        package_title:
           type: string
           $ref: '#/components/schemas/UnknownProperty'
-        genre_text: 
+        genre_text:
           type: string
-          description: some genre description, afaik pretty much free form
+          description: 'some genre description, afaik pretty much free form'
           example: podcasts
-        art_id: 
-          type: integer
-          description: the artwork ID
-          example: 1383920248
+        art_id:
+          $ref: '#/components/schemas/ArtworkID'
         alt_art_image_id:
-          type: integer
-        band_id: 
+          $ref: '#/components/schemas/ArtworkID'
+        band_id:
           type: integer
           example: 245993618
           description: the album artist
@@ -366,27 +403,26 @@ components:
               type: integer
             image_id:
               type: integer
-            height: 
+            height:
               type: integer
         featured_track:
           type: object
           properties:
-            title:  
+            title:
               type: string
-              example: >-
-                The Cochlear Album 2: Pan’s Poison Sample
-            id: 
+              example: 'The Cochlear Album 2: Pan’s Poison Sample'
+            id:
               type: integer
               example: 3056958565
             encodings_id:
               $ref: '#/components/schemas/UnknownProperty'
-            duration: 
+            duration:
               type: number
               example: 60.694
             file:
               type: object
               properties:
-                mp3-128: 
+                mp3-128:
                   type: string
                   format: uri
         category:
@@ -397,18 +433,18 @@ components:
         package_art2:
           $ref: '#/components/schemas/UnknownProperty'
         package_art3:
-              $ref: '#/components/schemas/UnknownProperty'
+          $ref: '#/components/schemas/UnknownProperty'
         package_art4:
           $ref: '#/components/schemas/UnknownProperty'
-        publish_date: 
+        publish_date:
           type: string
           example: '05 Mar 2018 04:55:34 GMT'
-        item_type_id: 
+        item_type_id:
           $ref: '#/components/schemas/UnknownProperty'
           example: a3672525499solr_hack
         is_preorder:
           type: boolean
-        recommendations: 
+        recommendations:
           $ref: '#/components/schemas/UnknownProperty'
         url_hints:
           type: object
@@ -417,8 +453,8 @@ components:
               $ref: '#/components/schemas/UnknownProperty'
             custom_domain:
               type: string
-              description: an artist's own, custom domain name
-            subdomain: 
+              description: 'an artist''s own, custom domain name'
+            subdomain:
               type: string
               description: the artist's subdomain on bandcamp.com
               example: tesdimplants2
@@ -427,22 +463,121 @@ components:
               enum:
                 - a
               description: the type can be `a`lbum
-            slug: 
+            slug:
               type: string
               example: the-cochlear-album-2-pans-poison
-        location_text: 
+        location_text:
           type: string
           example: 'New York, New York'
         extras:
-              $ref: '#/components/schemas/UnknownProperty'
+          $ref: '#/components/schemas/UnknownProperty'
         score:
           type: number
           $ref: '#/components/schemas/UnknownProperty'
         type:
           type: string
-          description: >-
-            `a` for Album
+          description: '`a` for Album'
           example: a
+          
+    DownloadEvent:
+      type: object
+      description: a download event
+      properties:
+        utc_date: 
+          type: number
+        event_type:
+          type: string
+          enum:
+            - download
+
+    SaleEvent:
+      type: object
+      description: a sale event, can have multiple sales
+      properties:
+        utc_date: 
+          type: number
+        event_type:
+          type: string
+          enum:
+            - sale
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/SaleItem'
+      
+    SaleItem:
+      type: object
+      description: an item sold
+      properties:
+        utc_date: 
+          type: number
+        amount_paid_fmt:
+          type: string
+          description: formatted amount paid for the item
+          example: $6 CAD
+        amount_paid:
+          type: number
+          example: 6
+        currency: 
+          type: string
+          description: three character currency description
+          example: CAD
+        amount_paid_usd: 
+          type: number
+          description: the paid amount in USD
+          example: 4.64
+        art_id:
+          $ref: '#/components/schemas/ArtworkID'
+        package_image_id: 
+          $ref: '#/components/schemas/UnknownProperty'
+        item_description:
+          type: string
+          description: Cast of Static and Smoke
+        track_album_slug_text:
+          type: string
+        artist_name: 
+          type: string
+          description: Vile Creature
+        slug_type: 
+          type: string
+          description: >-
+            `a` for artist etc.?
+          example: a
+        releases:
+          $ref: '#/components/schemas/UnknownProperty'
+        country_code: 
+          type: string
+          example: us
+        item_type:
+          $ref: '#/components/schemas/ItemType'
+        item_price:
+          type: number
+        country:
+          type: string
+          example: United States
+        art_url: 
+          type: string
+          format: URL
+          example: https://f4.bcbits.com/img/a2973040303_7.jpg
+        album_title: 
+          type: string
+        url: 
+          type: string
+          format: URL
+          description: the URL where the item can be found
+          example: //vilecreature.bandcamp.com/album/cast-of-static-and-smoke
+    
+    ArtworkID:
+      type: integer
+      description: the artwork ID
+      example: 1383920248
+      
+    ItemType:
+      type: string
+      enum:
+        - a
+      description: the type can be `a`lbum
+
     DiscoveryType:
       type: string
       enum:
@@ -450,11 +585,15 @@ components:
         - pic
         - new
         - most
+        
+    Timestamp:
+      type: integer
+      description: a timestamp in unix time
+      example: 1520400480
+
     UnknownProperty:
       type: string
       description: unknown?
-
-
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
