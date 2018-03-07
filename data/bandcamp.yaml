@@ -500,10 +500,10 @@ components:
           type: string
           enum:
             - sale
+        items:
+          type: array
           items:
-            type: array
-            items:
-              $ref: '#/components/schemas/SaleItem'
+            $ref: '#/components/schemas/SaleItem'
       
     SaleItem:
       type: object
