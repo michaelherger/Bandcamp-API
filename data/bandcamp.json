@@ -15,6 +15,12 @@
       "description": "Artwork serving & resizing. Does NOT serve the API. f0 can vary to f1, f4 etc."
     }
   ],
+  "tags": [
+    {
+      "name": "To be figured out",
+      "description": "end-points I have no clue about. Have fun!"
+    }
+  ],
   "paths": {
     "/band/3/search": {
       "get": {
@@ -24,17 +30,57 @@
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/DevKey"
+          },
+          {
             "in": "query",
-            "name": "band_id",
+            "name": "name",
             "schema": {
               "type": "string"
             },
-            "required": true
+            "required": true,
+            "example": "hermann"
           }
         ],
         "responses": {
           "200": {
-            "description": "the bands"
+            "description": "the bands",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "a search result",
+                        "properties": {
+                          "name": {
+                            "$ref": "#/components/schemas/ArtistName"
+                          },
+                          "band_id": {
+                            "$ref": "#/components/schemas/ArtistID"
+                          },
+                          "subdomain": {
+                            "$ref": "#/components/schemas/SubDomain"
+                          },
+                          "url": {
+                            "$ref": "#/components/schemas/ArtistURL"
+                          },
+                          "offsite_url": {
+                            "type": "string",
+                            "format": "URI",
+                            "description": "the artist's online presence outside bandcamp.com",
+                            "example": "http://facebook.com/hermannmusik"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -47,17 +93,71 @@
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/DevKey"
+          },
+          {
             "in": "query",
-            "name": "name",
+            "name": "band_id",
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "required": true
           }
         ],
         "responses": {
           "200": {
-            "description": "the bands"
+            "description": "the band's discography",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "a discography item",
+                        "properties": {
+                          "title": {
+                            "$ref": "#/components/schemas/AlbumTitle"
+                          },
+                          "artist": {
+                            "$ref": "#/components/schemas/ArtistName"
+                          },
+                          "band_id": {
+                            "$ref": "#/components/schemas/ArtistID"
+                          },
+                          "subdomain": {
+                            "$ref": "#/components/schemas/SubDomain"
+                          },
+                          "url": {
+                            "$ref": "#/components/schemas/AlbumURL"
+                          },
+                          "art_id": {
+                            "$ref": "#/components/schemas/ArtworkID"
+                          },
+                          "large_art_url": {
+                            "$ref": "#/components/schemas/ArtworkURL"
+                          },
+                          "small_art_url": {
+                            "$ref": "#/components/schemas/ArtworkURL"
+                          },
+                          "downloadable": {
+                            "$ref": "#/components/schemas/DownloadableFlag"
+                          },
+                          "release_date": {
+                            "$ref": "#/components/schemas/Timestamp"
+                          },
+                          "album_id": {
+                            "$ref": "#/components/schemas/AlbumID"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -70,6 +170,9 @@
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/DevKey"
+          },
+          {
             "in": "query",
             "name": "album_id",
             "schema": {
@@ -80,7 +183,65 @@
         ],
         "responses": {
           "200": {
-            "description": "the album"
+            "description": "the album",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "a discography item",
+                        "properties": {
+                          "title": {
+                            "$ref": "#/components/schemas/AlbumTitle"
+                          },
+                          "about": {
+                            "type": "string",
+                            "description": "a description of the given album",
+                            "example": "„Es gseht us, als wär d’Zyt still gstande, was an sich reizvoll wär, aber s’esch die falschi Zyt gsi...“ (Stillstand) \r\n\r\nHerzstück von Hermanns minimaler Mundart-Musik ist der Rhythm Ace FR-1. Mit seinen einfachen Rhythmen und dem warmen, analogen Klang liefert der 50-jährige Drumcomputer das ideale klangliche Gerüst für die drei Musiker, die auf der Suche nach einem neuen Sound waren. Das Gerät zwang ihnen die einfache Frage auf: wie füllt man die stoische Motorik mit Leben? Hermanns Antwort: Mit einfachen erzählenden Texten, die Ausflüge ins Politische, Alltagsphilosophische und Absurde unternehmen. Mit Gitarren- und Synthie-Sounds, die gleichermassen für stimmige Flächen wie für melodiöse Einfälle zuständig sind. Und mit einem Bass, der das stete Treiben des Rhythm Ace elegant mit dem musikalischen Überbau verbindet. All dies ergibt eine stimmungsvolle, punktgenaue Musik, die den Kopf gen oben öffnet, ohne dass die Füsse den Boden verlassen möchten."
+                          },
+                          "album_id": {
+                            "$ref": "#/components/schemas/AlbumID"
+                          },
+                          "band_id": {
+                            "$ref": "#/components/schemas/ArtistID"
+                          },
+                          "large_art_url": {
+                            "$ref": "#/components/schemas/ArtworkURL"
+                          },
+                          "small_art_url": {
+                            "$ref": "#/components/schemas/ArtworkURL"
+                          },
+                          "downloadable": {
+                            "$ref": "#/components/schemas/DownloadableFlag"
+                          },
+                          "release_date": {
+                            "$ref": "#/components/schemas/Timestamp"
+                          },
+                          "url": {
+                            "$ref": "#/components/schemas/AlbumURL"
+                          },
+                          "credits": {
+                            "type": "string",
+                            "description": "free text credits of the album",
+                            "example": "Hermann: Hannes Herger (Bass), Dani Hug (Synths), Jonathan Winkler (Gesang, Gitarre, Rhythm Ace FR-1)\r\nAufnahme & Mix: Timo Keller, StudioVomDach\r\nMastering: Dave Hofmann, Somastudios.ch\r\nDesign: hugototal.ch"
+                          },
+                          "tracks": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/components/schemas/Track"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -93,6 +254,9 @@
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/DevKey"
+          },
+          {
             "in": "query",
             "name": "track_id",
             "schema": {
@@ -103,7 +267,14 @@
         ],
         "responses": {
           "200": {
-            "description": "the tracks"
+            "description": "the track",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Track"
+                }
+              }
+            }
           }
         }
       }
@@ -119,7 +290,7 @@
         },
         "responses": {
           "200": {
-            "description": "The followers"
+            "$ref": "#/components/responses/FanCollection"
           }
         }
       }
@@ -135,7 +306,7 @@
         },
         "responses": {
           "200": {
-            "description": "The followed bands"
+            "$ref": "#/components/responses/FanCollection"
           }
         }
       }
@@ -151,7 +322,7 @@
         },
         "responses": {
           "200": {
-            "description": "The followed fans"
+            "$ref": "#/components/responses/FanCollection"
           }
         }
       }
@@ -167,7 +338,7 @@
         },
         "responses": {
           "200": {
-            "description": "The collection"
+            "$ref": "#/components/responses/ItemCollection"
           }
         }
       }
@@ -183,7 +354,7 @@
         },
         "responses": {
           "200": {
-            "description": "The wishlist"
+            "$ref": "#/components/responses/ItemCollection"
           }
         }
       }
@@ -192,7 +363,8 @@
       "post": {
         "summary": "Get a user's suggestions? Don't know, really.",
         "tags": [
-          "Fan Collection"
+          "Fan Collection",
+          "To be figured out"
         ],
         "requestBody": {
           "$ref": "#/components/requestBodies/FanCollectionBody"
@@ -208,7 +380,8 @@
       "post": {
         "summary": "Get the gifts a user has given?? Don't know, really.",
         "tags": [
-          "Fan Collection"
+          "Fan Collection",
+          "To be figured out"
         ],
         "requestBody": {
           "$ref": "#/components/requestBodies/FanCollectionBody"
@@ -228,17 +401,72 @@
         ],
         "parameters": [
           {
+            "$ref": "#/components/parameters/DevKey"
+          },
+          {
             "in": "query",
             "name": "url",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "URI"
             },
+            "example": "https://hrmnn.bandcamp.com",
             "required": true
           }
         ],
         "responses": {
           "200": {
-            "description": "the information"
+            "description": "information about the given URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "error_message": {
+                          "type": "string",
+                          "example": "unknown url"
+                        },
+                        "error": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "band_id": {
+                          "$ref": "#/components/parameters/ArtistID"
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "band_id": {
+                          "$ref": "#/components/parameters/ArtistID"
+                        },
+                        "track_id": {
+                          "$ref": "#/components/parameters/TrackID"
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "band_id": {
+                          "$ref": "#/components/parameters/ArtistID"
+                        },
+                        "album_id": {
+                          "$ref": "#/components/parameters/AlbumID"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -488,6 +716,17 @@
     }
   },
   "components": {
+    "parameters": {
+      "DevKey": {
+        "in": "query",
+        "name": "key",
+        "description": "a dev key which was provided by bandcamp.com. Unfortunately they no longer hand them out.",
+        "schema": {
+          "type": "string"
+        },
+        "required": true
+      }
+    },
     "requestBodies": {
       "FanCollectionBody": {
         "description": "JSON data of yet to understand data",
@@ -498,8 +737,7 @@
               "type": "object",
               "properties": {
                 "fan_id": {
-                  "type": "integer",
-                  "example": 1234
+                  "$ref": "#/components/schemas/FanID"
                 },
                 "older_than_token": {
                   "type": "string",
@@ -508,7 +746,7 @@
                 },
                 "count": {
                   "type": "integer",
-                  "example": 40,
+                  "example": 10,
                   "description": "The number of items to return. There's no known limit: I've run queries with up to 5000 results. Use carefully!\n"
                 }
               }
@@ -518,22 +756,48 @@
       }
     },
     "schemas": {
+      "ArtistName": {
+        "type": "string",
+        "description": "the artist name",
+        "example": "Hermann"
+      },
+      "ArtistID": {
+        "type": "integer",
+        "example": 2240734681
+      },
+      "ArtistURL": {
+        "type": "string",
+        "format": "URI",
+        "example": "http://hrmnn.bandcamp.com"
+      },
+      "AlbumURL": {
+        "type": "string",
+        "format": "URI",
+        "example": "http://hrmnn.bandcamp.com/album/hermann?pk=391"
+      },
+      "AlbumTitle": {
+        "type": "string",
+        "description": "the album title",
+        "example": "Hermann"
+      },
+      "AlbumID": {
+        "type": "integer",
+        "example": 793714377
+      },
       "Album": {
         "type": "object",
         "description": "an album object",
         "properties": {
           "primary_text": {
-            "type": "string",
-            "description": "the primary text to be shown with an item, eg its albun title",
-            "example": "The Cochlear Album 2: Pan's Poison"
+            "$ref": "#/components/schemas/AlbumTitle",
+            "description": "the primary text to be shown with an item, eg. its albun title"
           },
           "secondary_text": {
             "$ref": "#/components/schemas/UnknownProperty",
             "example": "TESD4Implants2"
           },
           "id": {
-            "type": "integer",
-            "example": 3672525499
+            "$ref": "#/components/schemas/AlbumID"
           },
           "package_title": {
             "type": "string",
@@ -551,9 +815,7 @@
             "$ref": "#/components/schemas/ArtworkID"
           },
           "band_id": {
-            "type": "integer",
-            "example": 245993618,
-            "description": "the album artist"
+            "$ref": "#/components/schemas/ArtistID"
           },
           "bio_image": {
             "type": "object",
@@ -574,7 +836,7 @@
             "properties": {
               "title": {
                 "type": "string",
-                "example": "The Cochlear Album 2: Pan’s Poison Sample"
+                "example": "Hermann"
               },
               "id": {
                 "type": "integer",
@@ -591,8 +853,7 @@
                 "type": "object",
                 "properties": {
                   "mp3-128": {
-                    "type": "string",
-                    "format": "uri"
+                    "$ref": "#/components/requestBodies/StreamURL"
                   }
                 }
               }
@@ -629,32 +890,7 @@
             "$ref": "#/components/schemas/UnknownProperty"
           },
           "url_hints": {
-            "type": "object",
-            "properties": {
-              "custom_domain_verified": {
-                "$ref": "#/components/schemas/UnknownProperty"
-              },
-              "custom_domain": {
-                "type": "string",
-                "description": "an artist's own, custom domain name"
-              },
-              "subdomain": {
-                "type": "string",
-                "description": "the artist's subdomain on bandcamp.com",
-                "example": "tesdimplants2"
-              },
-              "item_type": {
-                "type": "string",
-                "enum": [
-                  "a"
-                ],
-                "description": "the type can be `a`lbum"
-              },
-              "slug": {
-                "type": "string",
-                "example": "the-cochlear-album-2-pans-poison"
-              }
-            }
+            "$ref": "#/components/schemas/URLHints"
           },
           "location_text": {
             "type": "string",
@@ -727,9 +963,7 @@
             "example": 6
           },
           "currency": {
-            "type": "string",
-            "description": "three character currency description",
-            "example": "CAD"
+            "$ref": "#/components/schemas/Currency"
           },
           "amount_paid_usd": {
             "type": "number",
@@ -776,9 +1010,7 @@
             "example": "United States"
           },
           "art_url": {
-            "type": "string",
-            "format": "URL",
-            "example": "https://f4.bcbits.com/img/a2973040303_7.jpg"
+            "$ref": "#/components/schemas/ArtworkURL"
           },
           "album_title": {
             "type": "string"
@@ -791,10 +1023,151 @@
           }
         }
       },
+      "Track": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "$ref": "#/components/schemas/TrackTitle"
+          },
+          "band_id": {
+            "$ref": "#/components/schemas/ArtistID"
+          },
+          "large_art_url": {
+            "$ref": "#/components/schemas/ArtworkURL"
+          },
+          "small_art_url": {
+            "$ref": "#/components/schemas/ArtworkURL"
+          },
+          "streaming_url": {
+            "$ref": "#/components/requestBodies/StreamURL"
+          },
+          "downloadable": {
+            "$ref": "#/components/schemas/DownloadableFlag"
+          },
+          "number": {
+            "type": "integer"
+          },
+          "duration": {
+            "type": "number"
+          },
+          "album_id": {
+            "$ref": "#/components/schemas/AlbumID"
+          },
+          "url": {
+            "type": "string",
+            "description": "the track URL - despite its name not a full URL, but only it's path part!",
+            "example": "/track/kellner?pk=391"
+          },
+          "track_id": {
+            "$ref": "#/components/schemas/TrackID"
+          },
+          "credits": {
+            "type": "string"
+          },
+          "lyrics": {
+            "type": "string"
+          },
+          "about": {
+            "type": "string"
+          }
+        }
+      },
+      "TrackID": {
+        "type": "integer",
+        "example": 2484061734
+      },
+      "TrackTitle": {
+        "type": "string",
+        "example": "Kellner"
+      },
       "ArtworkID": {
         "type": "integer",
         "description": "the artwork ID",
-        "example": 1383920248
+        "example": 1386391961
+      },
+      "ArtworkURL": {
+        "type": "string",
+        "format": "URI",
+        "example": "https://f4.bcbits.com/img/a1386391961_3.jpg"
+      },
+      "SubDomain": {
+        "type": "string",
+        "description": "the subdomain where the artist is at home on bandcamp.com",
+        "example": "hrmnn"
+      },
+      "FollowerList": {
+        "type": "object",
+        "properties": {
+          "more_available": {
+            "type": "boolean"
+          },
+          "last_token": {
+            "type": "string",
+            "description": "the token of the last item returned in this response, starting point for a follow up request?",
+            "example": "1358631543:14628"
+          },
+          "followeers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Follower"
+            }
+          }
+        }
+      },
+      "Follower": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "band_id": {
+            "$ref": "#/components/schemas/ArtistID"
+          },
+          "is_following": {
+            "type": "boolean"
+          },
+          "is_subscribe": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "example": "Michael Herger"
+          },
+          "trackpipe_url": {
+            "type": "string",
+            "format": "URI",
+            "description": "the user's profile URL",
+            "example": "http://bandcamp.com/michaelherger"
+          },
+          "art_id": {
+            "$ref": "#/components/schemas/ArtworkID"
+          },
+          "image_id": {
+            "$ref": "#/components/schemas/ArtworkID"
+          },
+          "fan_id": {
+            "type": "integer",
+            "example": 10236
+          },
+          "token": {
+            "type": "string",
+            "example": "1432068324:195872"
+          },
+          "date_followed": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "fan_url": {
+            "type": "string",
+            "format": "URL"
+          },
+          "url_hints": {
+            "$ref": "#/components/schemas/URLHints"
+          }
+        }
+      },
+      "FanID": {
+        "type": "integer",
+        "example": 10236
       },
       "ItemType": {
         "type": "string",
@@ -812,14 +1185,447 @@
           "most"
         ]
       },
+      "Currency": {
+        "type": "string",
+        "description": "three character currency description",
+        "example": "CHF"
+      },
+      "StreamURL": {
+        "type": "string",
+        "format": "URI",
+        "example": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2484061734&ts=1520430789&t=85bce9f8b951fd3eb5decdbe48a17724eadc3c83"
+      },
+      "URLHints": {
+        "type": "object",
+        "properties": {
+          "custom_domain_verified": {
+            "$ref": "#/components/schemas/UnknownProperty"
+          },
+          "custom_domain": {
+            "type": "string",
+            "description": "an artist's own, custom domain name"
+          },
+          "subdomain": {
+            "type": "string",
+            "description": "the artist's subdomain on bandcamp.com",
+            "example": "hrmnn"
+          },
+          "item_type": {
+            "type": "string",
+            "enum": [
+              "a"
+            ],
+            "description": "the type can be `a`lbum"
+          },
+          "slug": {
+            "type": "string",
+            "example": "hermann"
+          }
+        }
+      },
       "Timestamp": {
         "type": "integer",
         "description": "a timestamp in unix time",
         "example": 1520400480
       },
+      "DownloadableFlag": {
+        "$ref": "#/components/schemas/UnknownProperty",
+        "example": 2
+      },
+      "MerchIDs": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "example": [
+          214158844,
+          833475221
+        ]
+      },
+      "Location": {
+        "type": "string",
+        "example": "Switzerland"
+      },
       "UnknownProperty": {
         "type": "string",
         "description": "unknown?"
+      }
+    },
+    "responses": {
+      "FanCollection": {
+        "description": "The followers",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/FollowerList"
+            }
+          }
+        }
+      },
+      "ItemCollection": {
+        "description": "The collection",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "more_available": {
+                  "type": "boolean"
+                },
+                "purchase_infos": {
+                  "type": "object"
+                },
+                "last_token": {
+                  "type": "string",
+                  "example": "1301406176:1500067389:a:2:"
+                },
+                "item_lookup": {
+                  "type": "object"
+                },
+                "redownload_urls": {
+                  "type": "object"
+                },
+                "collectors": {
+                  "type": "object"
+                },
+                "track_list": {
+                  "type": "array",
+                  "description": "featured tracks of the \"items\"?",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "currency": {
+                        "$ref": "#/components/requestBodies/Currency"
+                      },
+                      "has_digital_download": {
+                        "type": "boolean"
+                      },
+                      "album_title": {
+                        "$ref": "#/components/requestBodies/AlbumTitle"
+                      },
+                      "encodings_id": {
+                        "$ref": "#/components/requestBodies/UnknownProperty",
+                        "type": "number",
+                        "example": 18647555
+                      },
+                      "track_id": {
+                        "$ref": "#/components/requestBodies/TrackID"
+                      },
+                      "merch_ids": {
+                        "$ref": "#/components/requestBodies/MerchIDs"
+                      },
+                      "album_id": {
+                        "$ref": "#/components/requestBodies/AlbumID"
+                      },
+                      "duration": {
+                        "type": "number"
+                      },
+                      "title": {
+                        "$ref": "#/components/requestBodies/TrackTitle"
+                      },
+                      "label_id": {
+                        "$ref": "#/components/requestBodies/UnknownProperty"
+                      },
+                      "merch_sold_out": {
+                        "type": "boolean"
+                      },
+                      "price": {
+                        "type": "number"
+                      },
+                      "has_lyrics": {
+                        "type": "boolean"
+                      },
+                      "art_id": {
+                        "$ref": "#/components/requestBodies/ArtworkID"
+                      },
+                      "band_id": {
+                        "$ref": "#/components/requestBodies/ArtistID"
+                      },
+                      "label": {
+                        "$ref": "#/components/requestBodies/UnknownProperty"
+                      },
+                      "track_num": {
+                        "type": "integer"
+                      },
+                      "is_purchasable": {
+                        "type": "boolean"
+                      },
+                      "is_set_price": {
+                        "type": "boolean"
+                      },
+                      "streaming_url": {
+                        "type": "object",
+                        "properties": {
+                          "mp3-128": {
+                            "$ref": "#/components/requestBodies/StreamURL"
+                          }
+                        }
+                      },
+                      "require_email": {
+                        "type": "boolean"
+                      },
+                      "is_streamable": {
+                        "type": "boolean"
+                      },
+                      "band_name": {
+                        "$ref": "#/components/requestBodies/ArtistName"
+                      }
+                    }
+                  }
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "currency": {
+                        "$ref": "#/components/requestBodies/Currency"
+                      },
+                      "has_digital_download": {
+                        "type": "boolean"
+                      },
+                      "album_title": {
+                        "$ref": "#/components/requestBodies/AlbumTitle"
+                      },
+                      "gift_recipient_name": {
+                        "$ref": "#/components/requestBodies/UnknownProperty"
+                      },
+                      "featured_track_duration": {
+                        "type": "number"
+                      },
+                      "item_url": {
+                        "$ref": "#/components/requestBodies/AlbumURL"
+                      },
+                      "url_hints": {
+                        "$ref": "#/components/schemas/URLHints"
+                      },
+                      "tralbum_type": {
+                        "type": "string",
+                        "enum": [
+                          "a",
+                          "t?"
+                        ],
+                        "description": "whether this is an album or track?"
+                      },
+                      "fan_id": {
+                        "$ref": "#/components/schemas/FanID"
+                      },
+                      "is_subscription_item": {
+                        "type": "boolean"
+                      },
+                      "item_art_id": {
+                        "$ref": "#/components/schemas/ArtworkID"
+                      },
+                      "item_id": {
+                        "type": "integer"
+                      },
+                      "merch_ids": {
+                        "$ref": "#/components/requestBodies/MerchIDs"
+                      },
+                      "album_id": {
+                        "$ref": "#/components/requestBodies/AlbumID"
+                      },
+                      "featured_track_encodings_id": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty",
+                        "type": "integer"
+                      },
+                      "tralbum_id": {
+                        "oneOf": [
+                          {
+                            "$ref": "#/components/requestBodies/AlbumID"
+                          },
+                          {
+                            "$ref": "#/components/requestBodies/TrackID"
+                          }
+                        ]
+                      },
+                      "sale_item_id": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty",
+                        "type": "integer"
+                      },
+                      "label_id": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty",
+                        "type": "integer"
+                      },
+                      "band_location": {
+                        "$ref": "#/components/requestBodies/Location"
+                      },
+                      "is_subscriber_only": {
+                        "type": "boolean"
+                      },
+                      "featured_track_url": {
+                        "$ref": "#/components/requestBodies/StreamURL"
+                      },
+                      "item_art_url": {
+                        "$ref": "#/components/requestBodies/ArtworkURL"
+                      },
+                      "hidden": {
+                        "type": "boolean",
+                        "description": "an item which had been sold at some point, but is no longer available?"
+                      },
+                      "merch_sold_out": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty",
+                        "type": "boolean"
+                      },
+                      "price": {
+                        "type": "number"
+                      },
+                      "is_preorder": {
+                        "type": "boolean"
+                      },
+                      "package_details": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "item_title": {
+                        "oneOf": [
+                          {
+                            "$ref": "#/components/requestBodies/ArtistName"
+                          },
+                          {
+                            "$ref": "#/components/requestBodies/AlbumTitle"
+                          },
+                          {
+                            "$ref": "#/components/requestBodies/TrackTitle"
+                          }
+                        ]
+                      },
+                      "band_image_id": {
+                        "$ref": "#/components/requestBodies/ArtworkID"
+                      },
+                      "gift_id": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "is_private": {
+                        "type": "boolean",
+                        "description": "an item which had been sold at some point, but is no longer available"
+                      },
+                      "featured_track_number": {
+                        "type": "integer"
+                      },
+                      "band_url": {
+                        "$ref": "#/components/requestBodies/ArtistURL"
+                      },
+                      "item_art": {
+                        "type": "object",
+                        "properties": {
+                          "thumb_url": {
+                            "$ref": "#/components/requestBodies/ArtworkURL"
+                          },
+                          "art_id": {
+                            "$ref": "#/components/requestBodies/ArtworkID"
+                          },
+                          "url": {
+                            "$ref": "#/components/requestBodies/ArtworkURL"
+                          }
+                        }
+                      },
+                      "item_art_ids": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "num_streamable_tracks": {
+                        "type": "integer"
+                      },
+                      "sale_item_type": {
+                        "type": "string",
+                        "enum": [
+                          "p"
+                        ],
+                        "description": "`p`urchase?"
+                      },
+                      "purchased": {
+                        "$ref": "#/components/requestBodies/Timestamp"
+                      },
+                      "added": {
+                        "$ref": "#/components/requestBodies/Timestamp"
+                      },
+                      "band_id": {
+                        "$ref": "#/components/requestBodies/ArtistID"
+                      },
+                      "label": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "release_count": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "featured_track_title": {
+                        "$ref": "#/components/requestBodies/TrackTitel"
+                      },
+                      "index": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "is_set_price": {
+                        "type": "boolean"
+                      },
+                      "gift_sender_name": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "service_url_fragment": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "is_purchasable": {
+                        "type": "boolean"
+                      },
+                      "why": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "featured_track": {
+                        "$ref": "#/components/requestBodies/TrackID"
+                      },
+                      "updated": {
+                        "$ref": "#/components/requestBodies/Timestamp"
+                      },
+                      "token": {
+                        "type": "string",
+                        "example": "1505295591:793714377:a::"
+                      },
+                      "releases": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "message_count": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "featured_track_is_custom": {
+                        "type": "boolean"
+                      },
+                      "genre_id": {
+                        "type": "integer"
+                      },
+                      "discount": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "require_email": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty",
+                        "type": "boolean"
+                      },
+                      "gift_sender_note": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "service_name": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty"
+                      },
+                      "is_giftable": {
+                        "type": "boolean"
+                      },
+                      "band_name": {
+                        "$ref": "#/components/requestBodies/ArtistName"
+                      },
+                      "also_collected_count": {
+                        "$ref": "#/components/requestBodies/UnknwonProperty",
+                        "type": "integer"
+                      },
+                      "item_type": {
+                        "type": "string",
+                        "enum": [
+                          "album"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
