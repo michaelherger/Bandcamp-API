@@ -817,20 +817,44 @@
                       "type": "object",
                       "properties": {
                         "sales_count_all_time": {
-                          "$ref": "#/components/schemas/UnknownProperty",
-                          "example": 40981326
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/UnknownProperty"
+                            },
+                            {
+                              "example": 40981326
+                            }
+                          ]
                         },
                         "downloads_count_all_time": {
-                          "$ref": "#/components/schemas/UnknownProperty",
-                          "example": 182798723
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/UnknownProperty"
+                            },
+                            {
+                              "example": 182798723
+                            }
+                          ]
                         },
                         "revenue_total": {
-                          "$ref": "#/components/schemas/UnknownProperty",
-                          "example": 277276436
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/UnknownProperty"
+                            },
+                            {
+                              "example": 277276436
+                            }
+                          ]
                         },
                         "revenue_30d": {
-                          "$ref": "#/components/schemas/UnknownProperty",
-                          "example": 7291052
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/UnknownProperty"
+                            },
+                            {
+                              "example": 7291052
+                            }
+                          ]
                         }
                       }
                     }
@@ -1019,19 +1043,37 @@
         "description": "an album object",
         "properties": {
           "primary_text": {
-            "$ref": "#/components/schemas/AlbumTitle",
-            "description": "the primary text to be shown with an item, eg. its albun title"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AlbumTitle"
+              },
+              {
+                "description": "the primary text to be shown with an item, eg. its albun title"
+              }
+            ]
           },
           "secondary_text": {
-            "$ref": "#/components/schemas/UnknownProperty",
-            "example": "TESD4Implants2"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UnknownProperty"
+              },
+              {
+                "example": "TESD4Implants2"
+              }
+            ]
           },
           "id": {
             "$ref": "#/components/schemas/AlbumID"
           },
           "package_title": {
-            "type": "string",
-            "$ref": "#/components/schemas/UnknownProperty"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UnknownProperty"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "genre_text": {
             "type": "string",
@@ -1116,8 +1158,14 @@
             "example": "05 Mar 2018 04:55:34 GMT"
           },
           "item_type_id": {
-            "$ref": "#/components/schemas/UnknownProperty",
-            "example": "a3672525499solr_hack"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UnknownProperty"
+              },
+              {
+                "example": "a3672525499solr_hack"
+              }
+            ]
           },
           "is_preorder": {
             "type": "boolean"
@@ -1136,8 +1184,14 @@
             "$ref": "#/components/schemas/UnknownProperty"
           },
           "score": {
-            "type": "number",
-            "$ref": "#/components/schemas/UnknownProperty"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UnknownProperty"
+              },
+              {
+                "type": "number"
+              }
+            ]
           },
           "type": {
             "type": "string",
@@ -1404,100 +1458,95 @@
       "Fan": {
         "type": "object",
         "properties": {
-          "<FanID>": {
-            "type": "object",
-            "properties": {
-              "location": {
-                "$ref": "#/components/schemas/Location"
-              },
-              "bio": {
-                "type": "string",
-                "example": "King Crimson biographer among oher things."
-              },
-              "collection_size": {
-                "type": "integer"
-              },
-              "followed": {
-                "type": "integer"
-              },
-              "num_items_in_common": {
-                "type": "integer"
-              },
-              "fav_genre_name": {
-                "type": "string",
-                "example": "Alternative"
-              },
-              "fav_genre_id": {
-                "type": "integer",
-                "example": 2
-              },
-              "followed_by": {
-                "$ref": "#/components/schemas/FollowerList"
-              },
-              "trackpipe_url": {
-                "$ref": "#/components/schemas/TrackpipeURL"
-              },
-              "name": {
-                "type": "string",
-                "example": "Carlos Romeo"
-              },
-              "collection_art": {
-                "type": "array",
-                "items": {
+          "location": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "bio": {
+            "type": "string",
+            "example": "King Crimson biographer among oher things."
+          },
+          "collection_size": {
+            "type": "integer"
+          },
+          "followed": {
+            "type": "integer"
+          },
+          "num_items_in_common": {
+            "type": "integer"
+          },
+          "fav_genre_name": {
+            "type": "string",
+            "example": "Alternative"
+          },
+          "fav_genre_id": {
+            "type": "integer",
+            "example": 2
+          },
+          "followed_by": {
+            "$ref": "#/components/schemas/FollowerList"
+          },
+          "trackpipe_url": {
+            "$ref": "#/components/schemas/TrackpipeURL"
+          },
+          "name": {
+            "type": "string",
+            "example": "Carlos Romeo"
+          },
+          "collection_art": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "<index>": {
                   "type": "object",
                   "properties": {
-                    "<index>": {
+                    "art_info": {
                       "type": "object",
                       "properties": {
-                        "art_info": {
-                          "type": "object",
-                          "properties": {
-                            "art_id": {
-                              "type": "integer",
-                              "example": 1058221488
-                            }
-                          }
-                        },
-                        "tralbum_type": {
-                          "$ref": "#/components/schemas/TrAlbumType"
-                        },
-                        "tralbum_id": {
-                          "oneOf": [
-                            {
-                              "$ref": "#/components/requestBodies/AlbumID"
-                            },
-                            {
-                              "$ref": "#/components/requestBodies/TrackID"
-                            }
-                          ]
+                        "art_id": {
+                          "type": "integer",
+                          "example": 1058221488
                         }
                       }
+                    },
+                    "tralbum_type": {
+                      "$ref": "#/components/schemas/TrAlbumType"
+                    },
+                    "tralbum_id": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/requestBodies/AlbumID"
+                        },
+                        {
+                          "$ref": "#/components/requestBodies/TrackID"
+                        }
+                      ]
                     }
                   }
                 }
-              },
-              "image_id": {
-                "type": "integer",
-                "example": 878604
-              },
-              "fan_id": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FanID"
-                  },
-                  {
-                    "example": 4679
-                  }
-                ]
-              },
-              "is_montage_image": {
-                "$ref": "#/components/schemas/UnknownProperty"
-              },
-              "username": {
-                "type": "string",
-                "example": "ignacioc"
               }
             }
+          },
+          "image_id": {
+            "type": "integer",
+            "example": 878604
+          },
+          "fan_id": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FanID"
+              },
+              {
+                "example": 4679
+              }
+            ]
+          },
+          "is_montage_image": {
+            "$ref": "#/components/schemas/UnknownProperty"
+          },
+          "username": {
+            "type": "string",
+            "example": "ignacioc"
           }
         }
       },
@@ -1575,8 +1624,14 @@
         "example": 1520400480
       },
       "DownloadableFlag": {
-        "$ref": "#/components/schemas/UnknownProperty",
-        "example": 2
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UnknownProperty"
+          },
+          {
+            "example": 2
+          }
+        ]
       },
       "MerchIDs": {
         "type": "array",
@@ -1650,15 +1705,23 @@
                         "$ref": "#/components/requestBodies/AlbumTitle"
                       },
                       "encodings_id": {
-                        "$ref": "#/components/requestBodies/UnknownProperty",
-                        "type": "number",
-                        "example": 18647555
+                        "allOf": [
+                          {
+                            "$ref": "#/components/requestBodies/UnknownProperty"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "example": 18647555
+                          }
+                        ]
                       },
                       "track_id": {
                         "$ref": "#/components/requestBodies/TrackID"
                       },
                       "merch_ids": {
-                        "$ref": "#/components/requestBodies/MerchIDs"
+                        "$ref": "#/components/schemas/MerchIDs"
                       },
                       "album_id": {
                         "$ref": "#/components/requestBodies/AlbumID"
@@ -1761,14 +1824,20 @@
                         "type": "integer"
                       },
                       "merch_ids": {
-                        "$ref": "#/components/requestBodies/MerchIDs"
+                        "$ref": "#/components/schemas/MerchIDs"
                       },
                       "album_id": {
                         "$ref": "#/components/requestBodies/AlbumID"
                       },
                       "featured_track_encodings_id": {
-                        "$ref": "#/components/requestBodies/UnknwonProperty",
-                        "type": "integer"
+                        "allOf": [
+                          {
+                            "$ref": "#/components/requestBodies/UnknwonProperty"
+                          },
+                          {
+                            "type": "integer"
+                          }
+                        ]
                       },
                       "tralbum_id": {
                         "oneOf": [
@@ -1781,12 +1850,24 @@
                         ]
                       },
                       "sale_item_id": {
-                        "$ref": "#/components/requestBodies/UnknwonProperty",
-                        "type": "integer"
+                        "allOf": [
+                          {
+                            "$ref": "#/components/requestBodies/UnknwonProperty"
+                          },
+                          {
+                            "type": "integer"
+                          }
+                        ]
                       },
                       "label_id": {
-                        "$ref": "#/components/requestBodies/UnknwonProperty",
-                        "type": "integer"
+                        "allOf": [
+                          {
+                            "$ref": "#/components/requestBodies/UnknwonProperty"
+                          },
+                          {
+                            "type": "integer"
+                          }
+                        ]
                       },
                       "band_location": {
                         "$ref": "#/components/requestBodies/Location"
@@ -1805,8 +1886,14 @@
                         "description": "an item which had been sold at some point, but is no longer available?"
                       },
                       "merch_sold_out": {
-                        "$ref": "#/components/requestBodies/UnknwonProperty",
-                        "type": "boolean"
+                        "allOf": [
+                          {
+                            "$ref": "#/components/requestBodies/UnknwonProperty"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
                       },
                       "price": {
                         "type": "number"
@@ -1935,8 +2022,14 @@
                         "$ref": "#/components/requestBodies/UnknwonProperty"
                       },
                       "require_email": {
-                        "$ref": "#/components/requestBodies/UnknwonProperty",
-                        "type": "boolean"
+                        "allOf": [
+                          {
+                            "$ref": "#/components/requestBodies/UnknwonProperty"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
                       },
                       "gift_sender_note": {
                         "$ref": "#/components/requestBodies/UnknwonProperty"
@@ -1951,8 +2044,14 @@
                         "$ref": "#/components/requestBodies/ArtistName"
                       },
                       "also_collected_count": {
-                        "$ref": "#/components/requestBodies/UnknwonProperty",
-                        "type": "integer"
+                        "allOf": [
+                          {
+                            "$ref": "#/components/requestBodies/UnknwonProperty"
+                          },
+                          {
+                            "type": "integer"
+                          }
+                        ]
                       },
                       "item_type": {
                         "type": "string",
