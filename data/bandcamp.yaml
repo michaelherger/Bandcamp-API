@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   title: Bandcamp
 servers:
-  - url: 'https://bandcamp.com/api'
+  - url: 'https://bandcamp.com'
     description: API endpoint. Does NOT serve any artwork.
   - url: 'https://f0.bcbits.com'
     description: >-
@@ -14,7 +14,7 @@ tags:
   - name: To be figured out
     description: end-points I have no clue about. Have fun!
 paths:
-  /band/3/search:
+  /api/band/3/search:
     get:
       summary: Search for bands.
       tags:
@@ -41,21 +41,20 @@ paths:
                       type: object
                       description: a search result
                       properties:
-                        name: 
+                        name:
                           $ref: '#/components/schemas/ArtistName'
-                        band_id: 
+                        band_id:
                           $ref: '#/components/schemas/ArtistID'
-                        subdomain: 
+                        subdomain:
                           $ref: '#/components/schemas/SubDomain'
-                        url: 
+                        url:
                           $ref: '#/components/schemas/ArtistURL'
-                        offsite_url: 
+                        offsite_url:
                           type: string
                           format: URI
                           description: the artist's online presence outside bandcamp.com
-                          example: http://facebook.com/hermannmusik
-
-  /band/3/discography:
+                          example: 'http://facebook.com/hermannmusik'
+  /api/band/3/discography:
     get:
       summary: Get a band's discography.
       tags:
@@ -67,6 +66,7 @@ paths:
           schema:
             type: integer
           required: true
+          example: 2240734681
       responses:
         '200':
           description: the band's discography
@@ -81,15 +81,15 @@ paths:
                       type: object
                       description: a discography item
                       properties:
-                        title: 
+                        title:
                           $ref: '#/components/schemas/AlbumTitle'
-                        artist: 
+                        artist:
                           $ref: '#/components/schemas/ArtistName'
-                        band_id: 
+                        band_id:
                           $ref: '#/components/schemas/ArtistID'
-                        subdomain: 
+                        subdomain:
                           $ref: '#/components/schemas/SubDomain'
-                        url: 
+                        url:
                           $ref: '#/components/schemas/AlbumURL'
                         art_id:
                           $ref: '#/components/schemas/ArtworkID'
@@ -97,13 +97,13 @@ paths:
                           $ref: '#/components/schemas/ArtworkURL'
                         small_art_url:
                           $ref: '#/components/schemas/ArtworkURL'
-                        downloadable: 
+                        downloadable:
                           $ref: '#/components/schemas/DownloadableFlag'
                         release_date:
                           $ref: '#/components/schemas/Timestamp'
-                        album_id: 
+                        album_id:
                           $ref: '#/components/schemas/AlbumID'
-  /album/2/info:
+  /api/album/2/info:
     get:
       summary: Get album information.
       tags:
@@ -115,6 +115,7 @@ paths:
           schema:
             type: string
           required: true
+          example: 793714377
       responses:
         '200':
           description: the album
@@ -129,7 +130,7 @@ paths:
                       type: object
                       description: a discography item
                       properties:
-                        title: 
+                        title:
                           $ref: '#/components/schemas/AlbumTitle'
                         about:
                           type: string
@@ -137,17 +138,17 @@ paths:
                           example: "„Es gseht us, als wär d’Zyt still gstande, was an sich reizvoll wär, aber s’esch die falschi Zyt gsi...“ (Stillstand) \r\n\r\nHerzstück von Hermanns minimaler Mundart-Musik ist der Rhythm Ace FR-1. Mit seinen einfachen Rhythmen und dem warmen, analogen Klang liefert der 50-jährige Drumcomputer das ideale klangliche Gerüst für die drei Musiker, die auf der Suche nach einem neuen Sound waren. Das Gerät zwang ihnen die einfache Frage auf: wie füllt man die stoische Motorik mit Leben? Hermanns Antwort: Mit einfachen erzählenden Texten, die Ausflüge ins Politische, Alltagsphilosophische und Absurde unternehmen. Mit Gitarren- und Synthie-Sounds, die gleichermassen für stimmige Flächen wie für melodiöse Einfälle zuständig sind. Und mit einem Bass, der das stete Treiben des Rhythm Ace elegant mit dem musikalischen Überbau verbindet. All dies ergibt eine stimmungsvolle, punktgenaue Musik, die den Kopf gen oben öffnet, ohne dass die Füsse den Boden verlassen möchten."
                         album_id:
                           $ref: '#/components/schemas/AlbumID'
-                        band_id: 
+                        band_id:
                           $ref: '#/components/schemas/ArtistID'
                         large_art_url:
                           $ref: '#/components/schemas/ArtworkURL'
                         small_art_url:
                           $ref: '#/components/schemas/ArtworkURL'
-                        downloadable: 
+                        downloadable:
                           $ref: '#/components/schemas/DownloadableFlag'
                         release_date:
                           $ref: '#/components/schemas/Timestamp'
-                        url: 
+                        url:
                           $ref: '#/components/schemas/AlbumURL'
                         credits:
                           type: string
@@ -157,8 +158,7 @@ paths:
                           type: array
                           items:
                             $ref: '#/components/schemas/Track'
-                            
-  /track/3/info:
+  /api/track/3/info:
     get:
       summary: Get track information.
       tags:
@@ -170,6 +170,7 @@ paths:
           schema:
             type: string
           required: true
+          example: 5020296
       responses:
         '200':
           description: the track
@@ -177,8 +178,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Track'
-          
-  /fancollection/1/followers:
+  /api/fancollection/1/followers:
     post:
       summary: Get a user's followers
       tags:
@@ -188,8 +188,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/FanCollection'
-
-  /fancollection/1/following_bands:
+  /api/fancollection/1/following_bands:
     post:
       summary: Get the bands a user is following
       tags:
@@ -199,8 +198,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/FanCollection'
-
-  /fancollection/1/following_fans:
+  /api/fancollection/1/following_fans:
     post:
       summary: Get the fans a user is following
       tags:
@@ -210,8 +208,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/FanCollection'
-
-  /fancollection/1/collection_items:
+  /api/fancollection/1/collection_items:
     post:
       summary: Get a user's collection
       tags:
@@ -221,8 +218,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/ItemCollection'
-
-  /fancollection/1/wishlist_items:
+  /api/fancollection/1/wishlist_items:
     post:
       summary: Get a user's wishlist
       tags:
@@ -232,8 +228,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/ItemCollection'
-
-  /fancollection/1/fan_suggestions:
+  /api/fancollection/1/fan_suggestions:
     post:
       summary: 'Get a user''s suggestions? Don''t know, really.'
       tags:
@@ -244,7 +239,7 @@ paths:
       responses:
         '200':
           description: The suggestions
-  /fancollection/1/gifts_given:
+  /api/fancollection/1/gifts_given:
     post:
       summary: 'Get the gifts a user has given?? Don''t know, really.'
       tags:
@@ -255,7 +250,161 @@ paths:
       responses:
         '200':
           description: The gifts
-  /url/1/info:
+  /fan/2/collection_summary:
+    get:
+      summary: get the user's "Music Feed"
+      tags:
+        - To be figured out
+      parameters:
+        - in: header
+          schema:
+            type: string
+          name: Cookie
+          example: >-
+            __utma=241114640.1402729518.1499081724.1519889216.1520672370.21;
+            __utmb=241114640.2.10.1520672370; __utmc=241114640;
+            __utmz=241114640.1519881502.19.8.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided);
+            __utmt=1;
+            session=1%09t%3A1520672367%09bp%3A1%09r%3A%5B%22nilZ0f0x1520672367%22%2C%2239731231s0a793714377x1519890154%22%2C%2239731231s0i2240734681x1519890153%22%5D;
+            BACKENDID=bender01-3; fan_visits=10236z4679z188671z482972;
+            identity=6%0909ddd7b4f6eca8250cedc5f42546bd39%09%7B%22id%22%3A1712700664%2C%22h1%22%3A%220a36b7aa8ce0b80c36b86d5bc4d0e735%22%2C%22ex%22%3A0%7D;
+            logout=%7B%22username%22%3A%22paypal%40herger.net%22%7D;
+            want_https=1; __qca=P0-412173266-1499081724027;
+            client_id=D38AB1D81E70CC68504277E9FE450FABC8D939D402E73A4D4A8212974965AAF4
+      responses:
+        '200':
+          description: the feed
+  /fan_feed_poll:
+    post:
+      summary: get the user's "Music Feed"
+      tags:
+        - To be figured out
+      parameters:
+        - in: header
+          schema:
+            type: string
+          name: Cookie
+          example: >-
+            __utma=241114640.1402729518.1499081724.1519889216.1520672370.21;
+            __utmb=241114640.2.10.1520672370; __utmc=241114640;
+            __utmz=241114640.1519881502.19.8.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided);
+            __utmt=1;
+            session=1%09t%3A1520672367%09bp%3A1%09r%3A%5B%22nilZ0f0x1520672367%22%2C%2239731231s0a793714377x1519890154%22%2C%2239731231s0i2240734681x1519890153%22%5D;
+            BACKENDID=bender01-3; fan_visits=10236z4679z188671z482972;
+            identity=6%0909ddd7b4f6eca8250cedc5f42546bd39%09%7B%22id%22%3A1712700664%2C%22h1%22%3A%220a36b7aa8ce0b80c36b86d5bc4d0e735%22%2C%22ex%22%3A0%7D;
+            logout=%7B%22username%22%3A%22paypal%40herger.net%22%7D;
+            want_https=1; __qca=P0-412173266-1499081724027;
+            client_id=D38AB1D81E70CC68504277E9FE450FABC8D939D402E73A4D4A8212974965AAF4
+      requestBody:
+        description: JSON data of yet to understand data
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                since:
+                  $ref: '#/components/schemas/Timestamp'
+                crumb:
+                  type: string
+                  description: XXX
+                  example: '|fan_feed_poll|1520674192|JQgsXLOGnRKBBslOCPQXqpTCKJ0='
+      responses:
+        '200':
+          description: the feed
+  /fan_dash_feed_updates:
+    post:
+      summary: >-
+        The user's "Music Feed" of music suggestions
+      tags:
+        - Music Feed
+      parameters:
+        - $ref: '#/components/parameters/IdentityCookie'
+      requestBody:
+        description: JSON data of yet to understand data
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                older_than:
+                  allOf:
+                    - $ref: '#/components/schemas/Timestamp'
+                    - description: the unix timestamp from when the stream should start
+                fan_id:
+                  $ref: '#/components/schemas/FanID'
+      responses:
+        '200':
+          description: the Music Feed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stories:
+                    type: object
+                    properties:
+                      entries:
+                        description: the stream's items
+                        type: array
+                        items:
+                          description: a Music Stream item
+                          type: object
+                          properties:
+                            item_type:
+                              $ref: '#/components/schemas/ItemType'
+                      track_list:
+                        description: the list of playable items from the Music Stream?
+                        type: object
+                        properties:
+                          entries:
+                            description: the stream's items
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/Track'
+                      query_times:
+                        description: the times spent on the various queries required to compile the Music Stream. "Query":"Time" pairs
+                        type: object
+                      oldest_story_date:
+                        $ref: '#/components/schemas/Timestamp'
+                      feed_timestamp:
+                        $ref: '#/components/schemas/Timestamp'
+                      newest_story_date:
+                        allOf:
+                          - $ref: '#/components/schemas/Timestamp'
+                          - description: the timestamp of the most recent story in the result list
+                  fan_info:
+                    description: information about the fans featured in the stream
+                    type: object
+                    properties:
+                      <FanID>:
+                        $ref: '#/components/schemas/Fan'
+                  band_info:
+                    description: information about the bands featured in the stream
+                    type: object
+                    properties:
+                      <ArtistID>:
+                        type: object
+                        properties:
+                          name:
+                            $ref: '#/components/schemas/ArtistName'
+                          band_id:
+                            $ref: '#/components/schemas/ArtistID'
+                          image_id:
+                            $ref: '#/components/schemas/ArtworkID'
+                          genre_id:
+                            type: integer
+                          followed:
+                            type: integer
+                          no_index:
+                            $ref: '#/components/schemas/UnknownProperty'
+                          latest_art_id:
+                            $ref: '#/components/schemas/UnknownProperty'
+                  item_lookup:
+                    description: unknown, just empty?
+                    type: object
+  /api/url/1/info:
     get:
       summary: Get information about content on a given bandcamp.com URL.
       tags:
@@ -267,7 +416,7 @@ paths:
           schema:
             type: string
             format: URI
-          example: https://hrmnn.bandcamp.com
+          example: 'https://hrmnn.bandcamp.com'
           required: true
       responses:
         '200':
@@ -299,7 +448,6 @@ paths:
                         $ref: '#/components/parameters/ArtistID'
                       album_id:
                         $ref: '#/components/parameters/AlbumID'
-
   '/img/{type}{id}_{format}.jpg':
     get:
       summary: 'Endpoint on https://f0.bcbits.com/ to get various pieces of artwork.'
@@ -378,7 +526,7 @@ paths:
               schema:
                 type: string
                 format: binary
-  /salesfeed/1/get:
+  /api/salesfeed/1/get:
     get:
       summary: get currently selling items
       tags:
@@ -426,7 +574,7 @@ paths:
                       revenue_30d:
                         $ref: '#/components/schemas/UnknownProperty'
                         example: 7291052
-  /discover/3/get_web:
+  /api/discover/3/get_web:
     get:
       summary: get a list of discovery items
       description: >-
@@ -440,10 +588,12 @@ paths:
           schema:
             type: integer
           description: Page?
+          example: 0
         - in: query
           name: s
           schema:
             $ref: '#/components/schemas/DiscoveryType'
+          example: top
       responses:
         '200':
           description: the items
@@ -492,10 +642,20 @@ components:
     DevKey:
       in: query
       name: key
-      description: a dev key which was provided by bandcamp.com. Unfortunately they no longer hand them out.
+      description: >-
+        a dev key which was provided by bandcamp.com. Unfortunately they no
+        longer hand them out.
       schema:
         type: string
       required: true
+    IdentityCookie:
+      in: header
+      description: the identity cookie can only be received by logging in to the web site. Unfortunately I haven't found a way to log in programmatically yet. But that identity cookie seems to be rather long-lived (several days at least).
+      schema:
+        type: string
+      name: Cookie
+      example: >-
+        identity=6%0909ddd7b4f6eca8250cedc5f42546bd39%09%7B%22id%22%3A1712700664%2C%22h1%22%3A%220a36b7aa8ce0b80c36b86d5bc4d0e735%22%2C%22ex%22%3A0%7D;
   requestBodies:
     FanCollectionBody:
       description: JSON data of yet to understand data
@@ -534,21 +694,17 @@ components:
       type: string
       format: URI
       example: 'http://hrmnn.bandcamp.com'
-
     AlbumURL:
       type: string
       format: URI
       example: 'http://hrmnn.bandcamp.com/album/hermann?pk=391'
-
     AlbumTitle:
       type: string
       description: the album title
       example: Hermann
-      
     AlbumID:
       type: integer
       example: 793714377
-    
     Album:
       type: object
       description: an album object
@@ -601,10 +757,11 @@ components:
               type: object
               properties:
                 mp3-128:
-                  $ref: '#/components/requestBodies/StreamURL'
+                  $ref: '#/components/schemas/StreamURL'
         category:
-          $ref: '#/components/schemas/UnknownProperty'
-          example: solr_hack
+          allOf:
+            - $ref: '#/components/schemas/UnknownProperty'
+            - example: solr_hack
         package_art1:
           $ref: '#/components/schemas/UnknownProperty'
         package_art2:
@@ -720,45 +877,44 @@ components:
     Track:
       type: object
       properties:
-        title: 
+        title:
           $ref: '#/components/schemas/TrackTitle'
-        band_id: 
+        band_id:
           $ref: '#/components/schemas/ArtistID'
         large_art_url:
           $ref: '#/components/schemas/ArtworkURL'
         small_art_url:
           $ref: '#/components/schemas/ArtworkURL'
-        streaming_url: 
-          $ref: '#/components/requestBodies/StreamURL'
+        streaming_url:
+          $ref: '#/components/schemas/StreamURL'
         downloadable:
           $ref: '#/components/schemas/DownloadableFlag'
         number:
           type: integer
-        duration: 
+        duration:
           type: number
         album_id:
           $ref: '#/components/schemas/AlbumID'
-        url: 
+        url:
           type: string
-          description: the track URL - despite its name not a full URL, but only it's path part!
+          description: >-
+            the track URL - despite its name not a full URL, but only it's path
+            part!
           example: /track/kellner?pk=391
-        track_id: 
+        track_id:
           $ref: '#/components/schemas/TrackID'
         credits:
           type: string
         lyrics:
           type: string
-        about: 
+        about:
           type: string
-
     TrackID:
       type: integer
       example: 2484061734
-    
     TrackTitle:
       type: string
       example: Kellner
-
     ArtworkID:
       type: integer
       description: the artwork ID
@@ -774,20 +930,22 @@ components:
     FollowerList:
       type: object
       properties:
-        "more_available": 
+        more_available:
           type: boolean
-        "last_token": 
+        last_token:
           type: string
-          description: the token of the last item returned in this response, starting point for a follow up request?
-          example: "1358631543:14628"
-        "followeers":
+          description: >-
+            the token of the last item returned in this response, starting point
+            for a follow up request?
+          example: '1358631543:14628'
+        followeers:
           type: array
           items:
             $ref: '#/components/schemas/Follower'
     Follower:
       type: object
       properties:
-        location: 
+        location:
           $ref: '#/components/schemas/Location'
         band_id:
           $ref: '#/components/schemas/ArtistID'
@@ -795,25 +953,21 @@ components:
           type: boolean
         is_subscribe:
           type: boolean
-        name: 
+        name:
           type: string
           example: Michael Herger
-        trackpipe_url: 
-          type: string
-          format: URI
-          description: the user's profile URL
-          example: http://bandcamp.com/michaelherger
-        art_id: 
+        trackpipe_url:
+          $ref: '#/components/schemas/TrackpipeURL'
+        art_id:
           $ref: '#/components/schemas/ArtworkID'
-        image_id: 
+        image_id:
           $ref: '#/components/schemas/ArtworkID'
-        fan_id: 
-          type: integer
-          example: 10236
-        token: 
+        fan_id:
+          $ref: '#/components/schemas/FanID'
+        token:
           type: string
           example: '1432068324:195872'
-        date_followed: 
+        date_followed:
           $ref: '#/components/schemas/Timestamp'
         fan_url:
           type: string
@@ -823,6 +977,79 @@ components:
     FanID:
       type: integer
       example: 10236
+    Fan:
+      type: object
+      properties:
+        <FanID>:
+          type: object
+          properties:
+            location:
+              $ref: '#/components/schemas/Location'
+            bio: 
+              type: string
+              example: King Crimson biographer among oher things.
+            collection_size:
+              type: integer
+            followed:
+              type: integer
+            num_items_in_common:
+              type: integer
+            fav_genre_name: 
+              type: string
+              example: Alternative
+            fav_genre_id: 
+              type: integer
+              example: 2
+            followed_by:
+              $ref: '#/components/schemas/FollowerList'
+            trackpipe_url:
+              $ref: '#/components/schemas/TrackpipeURL'
+            name: 
+              type: string
+              example: Carlos Romeo
+            collection_art:
+              type: array
+              items:
+                type: object
+                properties:
+                  <index>:
+                    type: object
+                    properties:
+                      art_info:
+                        type: object
+                        properties:
+                          art_id:
+                            type: integer
+                            example: 1058221488
+                      tralbum_type:
+                        $ref: '#/components/schemas/TrAlbumType'
+                      tralbum_id:
+                        oneOf:
+                          - $ref: '#/components/requestBodies/AlbumID'
+                          - $ref: '#/components/requestBodies/TrackID'
+            image_id:
+              type: integer
+              example: 878604
+            fan_id:
+              allOf:
+                - $ref: '#/components/schemas/FanID'
+                - example: 4679
+            is_montage_image:
+              $ref: '#/components/schemas/UnknownProperty'
+            username:
+              type: string
+              example: ignacioc
+    TrAlbumType:
+      type: string
+      enum:
+        - a
+        - t?
+      description: whether this is an album or track?
+    TrackpipeURL:
+      type: string
+      format: URI
+      description: the user's profile URL
+      example: 'http://bandcamp.com/michaelherger'
     ItemType:
       type: string
       enum:
@@ -842,7 +1069,8 @@ components:
     StreamURL:
       type: string
       format: URI
-      example: 'https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2484061734&ts=1520430789&t=85bce9f8b951fd3eb5decdbe48a17724eadc3c83'    
+      example: >-
+        https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2484061734&ts=1520430789&t=85bce9f8b951fd3eb5decdbe48a17724eadc3c83
     URLHints:
       type: object
       properties:
@@ -874,14 +1102,15 @@ components:
       type: array
       items:
         type: number
-      example: [214158844,833475221]
+      example:
+        - 214158844
+        - 833475221
     Location:
       type: string
       example: Switzerland
     UnknownProperty:
       type: string
       description: unknown?
-      
   responses:
     FanCollection:
       description: The followers
@@ -898,18 +1127,18 @@ components:
             properties:
               more_available:
                 type: boolean
-              "purchase_infos":
+              purchase_infos:
                 type: object
-              "last_token": 
+              last_token:
                 type: string
-                example: "1301406176:1500067389:a:2:"
-              "item_lookup":
+                example: '1301406176:1500067389:a:2:'
+              item_lookup:
                 type: object
-              "redownload_urls":
+              redownload_urls:
                 type: object
-              "collectors":
+              collectors:
                 type: object
-              "track_list": 
+              track_list:
                 type: array
                 description: featured tracks of the "items"?
                 items:
@@ -921,7 +1150,7 @@ components:
                       type: boolean
                     album_title:
                       $ref: '#/components/requestBodies/AlbumTitle'
-                    encodings_id: 
+                    encodings_id:
                       $ref: '#/components/requestBodies/UnknownProperty'
                       type: number
                       example: 18647555
@@ -939,7 +1168,7 @@ components:
                       $ref: '#/components/requestBodies/UnknownProperty'
                     merch_sold_out:
                       type: boolean
-                    price: 
+                    price:
                       type: number
                     has_lyrics:
                       type: boolean
@@ -958,11 +1187,11 @@ components:
                     streaming_url:
                       type: object
                       properties:
-                        mp3-128: 
-                          $ref: '#/components/requestBodies/StreamURL'
+                        mp3-128:
+                          $ref: '#/components/schemas/StreamURL'
                     require_email:
                       type: boolean
-                    is_streamable: 
+                    is_streamable:
                       type: boolean
                     band_name:
                       $ref: '#/components/requestBodies/ArtistName'
@@ -986,11 +1215,7 @@ components:
                     url_hints:
                       $ref: '#/components/schemas/URLHints'
                     tralbum_type:
-                      type: string
-                      enum:
-                        - a
-                        - t?
-                      description: whether this is an album or track?
+                      $ref: '#/components/schemas/TrAlbumType'
                     fan_id:
                       $ref: '#/components/schemas/FanID'
                     is_subscription_item:
@@ -1021,12 +1246,14 @@ components:
                     is_subscriber_only:
                       type: boolean
                     featured_track_url:
-                      $ref: '#/components/requestBodies/StreamURL'
+                      $ref: '#/components/schemas/StreamURL'
                     item_art_url:
                       $ref: '#/components/requestBodies/ArtworkURL'
                     hidden:
                       type: boolean
-                      description: an item which had been sold at some point, but is no longer available?
+                      description: >-
+                        an item which had been sold at some point, but is no
+                        longer available?
                     merch_sold_out:
                       $ref: '#/components/requestBodies/UnknwonProperty'
                       type: boolean
@@ -1047,7 +1274,9 @@ components:
                       $ref: '#/components/requestBodies/UnknwonProperty'
                     is_private:
                       type: boolean
-                      description: an item which had been sold at some point, but is no longer available                
+                      description: >-
+                        an item which had been sold at some point, but is no
+                        longer available
                     featured_track_number:
                       type: integer
                     band_url:
@@ -1069,8 +1298,7 @@ components:
                       type: string
                       enum:
                         - p
-                      description: >-
-                        `p`urchase?
+                      description: '`p`urchase?'
                     purchased:
                       $ref: '#/components/requestBodies/Timestamp'
                     added:
@@ -1085,7 +1313,7 @@ components:
                       $ref: '#/components/requestBodies/TrackTitel'
                     index:
                       $ref: '#/components/requestBodies/UnknwonProperty'
-                    is_set_price: 
+                    is_set_price:
                       type: boolean
                     gift_sender_name:
                       $ref: '#/components/requestBodies/UnknwonProperty'
@@ -1099,7 +1327,7 @@ components:
                       $ref: '#/components/requestBodies/TrackID'
                     updated:
                       $ref: '#/components/requestBodies/Timestamp'
-                    token: 
+                    token:
                       type: string
                       example: '1505295591:793714377:a::'
                     releases:
@@ -1126,7 +1354,7 @@ components:
                     also_collected_count:
                       $ref: '#/components/requestBodies/UnknwonProperty'
                       type: integer
-                    item_type: 
+                    item_type:
                       type: string
                       enum:
                         - album

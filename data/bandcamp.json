@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://bandcamp.com/api",
+      "url": "https://bandcamp.com",
       "description": "API endpoint. Does NOT serve any artwork."
     },
     {
@@ -22,7 +22,7 @@
     }
   ],
   "paths": {
-    "/band/3/search": {
+    "/api/band/3/search": {
       "get": {
         "summary": "Search for bands.",
         "tags": [
@@ -85,7 +85,7 @@
         }
       }
     },
-    "/band/3/discography": {
+    "/api/band/3/discography": {
       "get": {
         "summary": "Get a band's discography.",
         "tags": [
@@ -101,7 +101,8 @@
             "schema": {
               "type": "integer"
             },
-            "required": true
+            "required": true,
+            "example": 2240734681
           }
         ],
         "responses": {
@@ -162,7 +163,7 @@
         }
       }
     },
-    "/album/2/info": {
+    "/api/album/2/info": {
       "get": {
         "summary": "Get album information.",
         "tags": [
@@ -178,7 +179,8 @@
             "schema": {
               "type": "string"
             },
-            "required": true
+            "required": true,
+            "example": 793714377
           }
         ],
         "responses": {
@@ -246,7 +248,7 @@
         }
       }
     },
-    "/track/3/info": {
+    "/api/track/3/info": {
       "get": {
         "summary": "Get track information.",
         "tags": [
@@ -262,7 +264,8 @@
             "schema": {
               "type": "string"
             },
-            "required": true
+            "required": true,
+            "example": 5020296
           }
         ],
         "responses": {
@@ -279,7 +282,7 @@
         }
       }
     },
-    "/fancollection/1/followers": {
+    "/api/fancollection/1/followers": {
       "post": {
         "summary": "Get a user's followers",
         "tags": [
@@ -295,7 +298,7 @@
         }
       }
     },
-    "/fancollection/1/following_bands": {
+    "/api/fancollection/1/following_bands": {
       "post": {
         "summary": "Get the bands a user is following",
         "tags": [
@@ -311,7 +314,7 @@
         }
       }
     },
-    "/fancollection/1/following_fans": {
+    "/api/fancollection/1/following_fans": {
       "post": {
         "summary": "Get the fans a user is following",
         "tags": [
@@ -327,7 +330,7 @@
         }
       }
     },
-    "/fancollection/1/collection_items": {
+    "/api/fancollection/1/collection_items": {
       "post": {
         "summary": "Get a user's collection",
         "tags": [
@@ -343,7 +346,7 @@
         }
       }
     },
-    "/fancollection/1/wishlist_items": {
+    "/api/fancollection/1/wishlist_items": {
       "post": {
         "summary": "Get a user's wishlist",
         "tags": [
@@ -359,7 +362,7 @@
         }
       }
     },
-    "/fancollection/1/fan_suggestions": {
+    "/api/fancollection/1/fan_suggestions": {
       "post": {
         "summary": "Get a user's suggestions? Don't know, really.",
         "tags": [
@@ -376,7 +379,7 @@
         }
       }
     },
-    "/fancollection/1/gifts_given": {
+    "/api/fancollection/1/gifts_given": {
       "post": {
         "summary": "Get the gifts a user has given?? Don't know, really.",
         "tags": [
@@ -393,7 +396,223 @@
         }
       }
     },
-    "/url/1/info": {
+    "/fan/2/collection_summary": {
+      "get": {
+        "summary": "get the user's \"Music Feed\"",
+        "tags": [
+          "To be figured out"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "name": "Cookie",
+            "example": "__utma=241114640.1402729518.1499081724.1519889216.1520672370.21; __utmb=241114640.2.10.1520672370; __utmc=241114640; __utmz=241114640.1519881502.19.8.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __utmt=1; session=1%09t%3A1520672367%09bp%3A1%09r%3A%5B%22nilZ0f0x1520672367%22%2C%2239731231s0a793714377x1519890154%22%2C%2239731231s0i2240734681x1519890153%22%5D; BACKENDID=bender01-3; fan_visits=10236z4679z188671z482972; identity=6%0909ddd7b4f6eca8250cedc5f42546bd39%09%7B%22id%22%3A1712700664%2C%22h1%22%3A%220a36b7aa8ce0b80c36b86d5bc4d0e735%22%2C%22ex%22%3A0%7D; logout=%7B%22username%22%3A%22paypal%40herger.net%22%7D; want_https=1; __qca=P0-412173266-1499081724027; client_id=D38AB1D81E70CC68504277E9FE450FABC8D939D402E73A4D4A8212974965AAF4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the feed"
+          }
+        }
+      }
+    },
+    "/fan_feed_poll": {
+      "post": {
+        "summary": "get the user's \"Music Feed\"",
+        "tags": [
+          "To be figured out"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "name": "Cookie",
+            "example": "__utma=241114640.1402729518.1499081724.1519889216.1520672370.21; __utmb=241114640.2.10.1520672370; __utmc=241114640; __utmz=241114640.1519881502.19.8.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __utmt=1; session=1%09t%3A1520672367%09bp%3A1%09r%3A%5B%22nilZ0f0x1520672367%22%2C%2239731231s0a793714377x1519890154%22%2C%2239731231s0i2240734681x1519890153%22%5D; BACKENDID=bender01-3; fan_visits=10236z4679z188671z482972; identity=6%0909ddd7b4f6eca8250cedc5f42546bd39%09%7B%22id%22%3A1712700664%2C%22h1%22%3A%220a36b7aa8ce0b80c36b86d5bc4d0e735%22%2C%22ex%22%3A0%7D; logout=%7B%22username%22%3A%22paypal%40herger.net%22%7D; want_https=1; __qca=P0-412173266-1499081724027; client_id=D38AB1D81E70CC68504277E9FE450FABC8D939D402E73A4D4A8212974965AAF4"
+          }
+        ],
+        "requestBody": {
+          "description": "JSON data of yet to understand data",
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "since": {
+                    "$ref": "#/components/schemas/Timestamp"
+                  },
+                  "crumb": {
+                    "type": "string",
+                    "description": "XXX",
+                    "example": "|fan_feed_poll|1520674192|JQgsXLOGnRKBBslOCPQXqpTCKJ0="
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "the feed"
+          }
+        }
+      }
+    },
+    "/fan_dash_feed_updates": {
+      "post": {
+        "summary": "The user's \"Music Feed\" of music suggestions",
+        "tags": [
+          "Music Feed"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdentityCookie"
+          }
+        ],
+        "requestBody": {
+          "description": "JSON data of yet to understand data",
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "older_than": {
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Timestamp"
+                      },
+                      {
+                        "description": "the unix timestamp from when the stream should start"
+                      }
+                    ]
+                  },
+                  "fan_id": {
+                    "$ref": "#/components/schemas/FanID"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "the Music Feed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "stories": {
+                      "type": "object",
+                      "properties": {
+                        "entries": {
+                          "description": "the stream's items",
+                          "type": "array",
+                          "items": {
+                            "description": "a Music Stream item",
+                            "type": "object",
+                            "properties": {
+                              "item_type": {
+                                "$ref": "#/components/schemas/ItemType"
+                              }
+                            }
+                          }
+                        },
+                        "track_list": {
+                          "description": "the list of playable items from the Music Stream?",
+                          "type": "object",
+                          "properties": {
+                            "entries": {
+                              "description": "the stream's items",
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/Track"
+                              }
+                            }
+                          }
+                        },
+                        "query_times": {
+                          "description": "the times spent on the various queries required to compile the Music Stream. \"Query\":\"Time\" pairs",
+                          "type": "object"
+                        },
+                        "oldest_story_date": {
+                          "$ref": "#/components/schemas/Timestamp"
+                        },
+                        "feed_timestamp": {
+                          "$ref": "#/components/schemas/Timestamp"
+                        },
+                        "newest_story_date": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/Timestamp"
+                            },
+                            {
+                              "description": "the timestamp of the most recent story in the result list"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "fan_info": {
+                      "description": "information about the fans featured in the stream",
+                      "type": "object",
+                      "properties": {
+                        "<FanID>": {
+                          "$ref": "#/components/schemas/Fan"
+                        }
+                      }
+                    },
+                    "band_info": {
+                      "description": "information about the bands featured in the stream",
+                      "type": "object",
+                      "properties": {
+                        "<ArtistID>": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "$ref": "#/components/schemas/ArtistName"
+                            },
+                            "band_id": {
+                              "$ref": "#/components/schemas/ArtistID"
+                            },
+                            "image_id": {
+                              "$ref": "#/components/schemas/ArtworkID"
+                            },
+                            "genre_id": {
+                              "type": "integer"
+                            },
+                            "followed": {
+                              "type": "integer"
+                            },
+                            "no_index": {
+                              "$ref": "#/components/schemas/UnknownProperty"
+                            },
+                            "latest_art_id": {
+                              "$ref": "#/components/schemas/UnknownProperty"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "item_lookup": {
+                      "description": "unknown, just empty?",
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/url/1/info": {
       "get": {
         "summary": "Get information about content on a given bandcamp.com URL.",
         "tags": [
@@ -545,7 +764,7 @@
         }
       }
     },
-    "/salesfeed/1/get": {
+    "/api/salesfeed/1/get": {
       "get": {
         "summary": "get currently selling items",
         "tags": [
@@ -623,7 +842,7 @@
         }
       }
     },
-    "/discover/3/get_web": {
+    "/api/discover/3/get_web": {
       "get": {
         "summary": "get a list of discovery items",
         "description": "get a list of discovery items: `top` selling, staff `pic`ks, `new` arrivals, `most` recommended",
@@ -637,14 +856,16 @@
             "schema": {
               "type": "integer"
             },
-            "description": "Page?"
+            "description": "Page?",
+            "example": 0
           },
           {
             "in": "query",
             "name": "s",
             "schema": {
               "$ref": "#/components/schemas/DiscoveryType"
-            }
+            },
+            "example": "top"
           }
         ],
         "responses": {
@@ -725,6 +946,15 @@
           "type": "string"
         },
         "required": true
+      },
+      "IdentityCookie": {
+        "in": "header",
+        "description": "the identity cookie can only be received by logging in to the web site. Unfortunately I haven't found a way to log in programmatically yet. But that identity cookie seems to be rather long-lived (several days at least).",
+        "schema": {
+          "type": "string"
+        },
+        "name": "Cookie",
+        "example": "identity=6%0909ddd7b4f6eca8250cedc5f42546bd39%09%7B%22id%22%3A1712700664%2C%22h1%22%3A%220a36b7aa8ce0b80c36b86d5bc4d0e735%22%2C%22ex%22%3A0%7D;"
       }
     },
     "requestBodies": {
@@ -853,15 +1083,21 @@
                 "type": "object",
                 "properties": {
                   "mp3-128": {
-                    "$ref": "#/components/requestBodies/StreamURL"
+                    "$ref": "#/components/schemas/StreamURL"
                   }
                 }
               }
             }
           },
           "category": {
-            "$ref": "#/components/schemas/UnknownProperty",
-            "example": "solr_hack"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UnknownProperty"
+              },
+              {
+                "example": "solr_hack"
+              }
+            ]
           },
           "package_art1": {
             "$ref": "#/components/schemas/UnknownProperty"
@@ -1039,7 +1275,7 @@
             "$ref": "#/components/schemas/ArtworkURL"
           },
           "streaming_url": {
-            "$ref": "#/components/requestBodies/StreamURL"
+            "$ref": "#/components/schemas/StreamURL"
           },
           "downloadable": {
             "$ref": "#/components/schemas/DownloadableFlag"
@@ -1134,10 +1370,7 @@
             "example": "Michael Herger"
           },
           "trackpipe_url": {
-            "type": "string",
-            "format": "URI",
-            "description": "the user's profile URL",
-            "example": "http://bandcamp.com/michaelherger"
+            "$ref": "#/components/schemas/TrackpipeURL"
           },
           "art_id": {
             "$ref": "#/components/schemas/ArtworkID"
@@ -1146,8 +1379,7 @@
             "$ref": "#/components/schemas/ArtworkID"
           },
           "fan_id": {
-            "type": "integer",
-            "example": 10236
+            "$ref": "#/components/schemas/FanID"
           },
           "token": {
             "type": "string",
@@ -1168,6 +1400,120 @@
       "FanID": {
         "type": "integer",
         "example": 10236
+      },
+      "Fan": {
+        "type": "object",
+        "properties": {
+          "<FanID>": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "$ref": "#/components/schemas/Location"
+              },
+              "bio": {
+                "type": "string",
+                "example": "King Crimson biographer among oher things."
+              },
+              "collection_size": {
+                "type": "integer"
+              },
+              "followed": {
+                "type": "integer"
+              },
+              "num_items_in_common": {
+                "type": "integer"
+              },
+              "fav_genre_name": {
+                "type": "string",
+                "example": "Alternative"
+              },
+              "fav_genre_id": {
+                "type": "integer",
+                "example": 2
+              },
+              "followed_by": {
+                "$ref": "#/components/schemas/FollowerList"
+              },
+              "trackpipe_url": {
+                "$ref": "#/components/schemas/TrackpipeURL"
+              },
+              "name": {
+                "type": "string",
+                "example": "Carlos Romeo"
+              },
+              "collection_art": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "<index>": {
+                      "type": "object",
+                      "properties": {
+                        "art_info": {
+                          "type": "object",
+                          "properties": {
+                            "art_id": {
+                              "type": "integer",
+                              "example": 1058221488
+                            }
+                          }
+                        },
+                        "tralbum_type": {
+                          "$ref": "#/components/schemas/TrAlbumType"
+                        },
+                        "tralbum_id": {
+                          "oneOf": [
+                            {
+                              "$ref": "#/components/requestBodies/AlbumID"
+                            },
+                            {
+                              "$ref": "#/components/requestBodies/TrackID"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "image_id": {
+                "type": "integer",
+                "example": 878604
+              },
+              "fan_id": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FanID"
+                  },
+                  {
+                    "example": 4679
+                  }
+                ]
+              },
+              "is_montage_image": {
+                "$ref": "#/components/schemas/UnknownProperty"
+              },
+              "username": {
+                "type": "string",
+                "example": "ignacioc"
+              }
+            }
+          }
+        }
+      },
+      "TrAlbumType": {
+        "type": "string",
+        "enum": [
+          "a",
+          "t?"
+        ],
+        "description": "whether this is an album or track?"
+      },
+      "TrackpipeURL": {
+        "type": "string",
+        "format": "URI",
+        "description": "the user's profile URL",
+        "example": "http://bandcamp.com/michaelherger"
       },
       "ItemType": {
         "type": "string",
@@ -1357,7 +1703,7 @@
                         "type": "object",
                         "properties": {
                           "mp3-128": {
-                            "$ref": "#/components/requestBodies/StreamURL"
+                            "$ref": "#/components/schemas/StreamURL"
                           }
                         }
                       },
@@ -1400,12 +1746,7 @@
                         "$ref": "#/components/schemas/URLHints"
                       },
                       "tralbum_type": {
-                        "type": "string",
-                        "enum": [
-                          "a",
-                          "t?"
-                        ],
-                        "description": "whether this is an album or track?"
+                        "$ref": "#/components/schemas/TrAlbumType"
                       },
                       "fan_id": {
                         "$ref": "#/components/schemas/FanID"
@@ -1454,7 +1795,7 @@
                         "type": "boolean"
                       },
                       "featured_track_url": {
-                        "$ref": "#/components/requestBodies/StreamURL"
+                        "$ref": "#/components/schemas/StreamURL"
                       },
                       "item_art_url": {
                         "$ref": "#/components/requestBodies/ArtworkURL"
