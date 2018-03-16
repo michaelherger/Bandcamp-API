@@ -639,46 +639,54 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "published_date": {
-                      "type": "string",
-                      "description": "a formatted timestamp",
-                      "example": "27 Sep 2016 00:00:00 GMT"
-                    },
-                    "date": {
-                      "type": "string",
-                      "description": "a formatted timestamp",
-                      "example": "27 Sep 2016 00:00:00 GMT"
-                    },
-                    "image_caption": {
-                      "$ref": "#/components/schemas/ImageCaption"
-                    },
-                    "subtitle": {
-                      "type": "string",
-                      "example": "All in the Family"
-                    },
-                    "desc": {
-                      "$ref": "#/components/schemas/ShowDescription"
-                    },
-                    "image_id": {
-                      "type": "integer",
-                      "description": "smallest?"
-                    },
-                    "v2_image_id": {
-                      "type": "integer",
-                      "description": "largest?"
-                    },
-                    "screen_image_id": {
-                      "type": "integer",
-                      "description": "middle size, still 1000px?"
-                    },
-                    "id": {
-                      "type": "integer",
-                      "example": 198
-                    },
-                    "button_color": {
-                      "type": "string",
-                      "description": "a HTML/CSS color definition, likely matching the artwork",
-                      "example": "f03b2b"
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "published_date": {
+                            "type": "string",
+                            "description": "a formatted timestamp",
+                            "example": "27 Sep 2016 00:00:00 GMT"
+                          },
+                          "date": {
+                            "type": "string",
+                            "description": "a formatted timestamp",
+                            "example": "27 Sep 2016 00:00:00 GMT"
+                          },
+                          "image_caption": {
+                            "$ref": "#/components/schemas/ImageCaption"
+                          },
+                          "subtitle": {
+                            "type": "string",
+                            "example": "All in the Family"
+                          },
+                          "desc": {
+                            "$ref": "#/components/schemas/ShowDescription"
+                          },
+                          "image_id": {
+                            "type": "integer",
+                            "description": "smallest?"
+                          },
+                          "v2_image_id": {
+                            "type": "integer",
+                            "description": "largest?"
+                          },
+                          "screen_image_id": {
+                            "type": "integer",
+                            "description": "middle size, still 1000px?"
+                          },
+                          "id": {
+                            "type": "integer",
+                            "example": 198
+                          },
+                          "button_color": {
+                            "type": "string",
+                            "description": "a HTML/CSS color definition, likely matching the artwork",
+                            "example": "f03b2b"
+                          }
+                        }
+                      }
                     }
                   }
                 }
