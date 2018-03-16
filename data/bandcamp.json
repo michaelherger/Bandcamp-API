@@ -166,6 +166,7 @@
     "/api/album/2/info": {
       "get": {
         "summary": "Get album information.",
+        "description": "unfortunately this call would not return all playable items, even if an identity cookie or the like was used.",
         "tags": [
           "Albums"
         ],
@@ -335,6 +336,11 @@
         "summary": "Get a user's collection",
         "tags": [
           "Fan Collection"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdentityCookie"
+          }
         ],
         "requestBody": {
           "$ref": "#/components/requestBodies/FanCollectionBody"
@@ -600,9 +606,301 @@
                         }
                       }
                     },
+                    "story_collectors": {
+                      "description": "fans of one of the stream items?",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/UnknownProperty"
+                      }
+                    },
                     "item_lookup": {
                       "description": "unknown, just empty?",
                       "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bcweekly/2/list": {
+      "get": {
+        "summary": "Get a list of the Weekly shows.",
+        "tags": [
+          "Weekly"
+        ],
+        "responses": {
+          "200": {
+            "description": "the list of available Weekly shows",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "published_date": {
+                      "type": "string",
+                      "description": "a formatted timestamp",
+                      "example": "27 Sep 2016 00:00:00 GMT"
+                    },
+                    "date": {
+                      "type": "string",
+                      "description": "a formatted timestamp",
+                      "example": "27 Sep 2016 00:00:00 GMT"
+                    },
+                    "image_caption": {
+                      "$ref": "#/components/schemas/ImageCaption"
+                    },
+                    "subtitle": {
+                      "type": "string",
+                      "example": "All in the Family"
+                    },
+                    "desc": {
+                      "$ref": "#/components/schemas/ShowDescription"
+                    },
+                    "image_id": {
+                      "type": "integer",
+                      "description": "smallest?"
+                    },
+                    "v2_image_id": {
+                      "type": "integer",
+                      "description": "largest?"
+                    },
+                    "screen_image_id": {
+                      "type": "integer",
+                      "description": "middle size, still 1000px?"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "example": 198
+                    },
+                    "button_color": {
+                      "type": "string",
+                      "description": "a HTML/CSS color definition, likely matching the artwork",
+                      "example": "f03b2b"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bcweekly/2/get": {
+      "get": {
+        "summary": "Get information about a Weekly show.",
+        "tags": [
+          "Weekly"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 270,
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the list of available Weekly shows",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "show_id": {
+                      "type": "integer",
+                      "example": 198
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "always the same?",
+                      "example": "Bandcamp Weekly"
+                    },
+                    "subtitle": {
+                      "type": "string",
+                      "example": "All in the Family"
+                    },
+                    "desc": {
+                      "$ref": "#/components/schemas/ShowDescription"
+                    },
+                    "short_desc": {
+                      "type": "string",
+                      "example": "Goat & Reginald Omas Mamode IV"
+                    },
+                    "audio_title": {
+                      "type": "string",
+                      "example": "BC Weekly 183 September 27th 2016"
+                    },
+                    "show_screen_image_id": {
+                      "type": "integer",
+                      "example": 8380257
+                    },
+                    "show_v2_image_id": {
+                      "type": "integer",
+                      "example": 8387090
+                    },
+                    "show_image_id": {
+                      "type": "integer",
+                      "example": 8387090
+                    },
+                    "audio_track_id": {
+                      "type": "integer",
+                      "description": "pointing to single file for whole podcast"
+                    },
+                    "audio_duration": {
+                      "type": "number",
+                      "example": 5388.41
+                    },
+                    "audio_stream": {
+                      "type": "object",
+                      "description": "pointing to single file for whole podcast",
+                      "properties": {
+                        "mp3-128": {
+                          "type": "string",
+                          "format": "url",
+                          "example": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1447643114&ts=1521207419&t=5852f1d29b7d9d8e11b62bae086245d3a65c70ef"
+                        },
+                        "opus-lo": {
+                          "type": "string",
+                          "format": "url",
+                          "example": "https://popplers5.bandcamp.com/download/track?enc=opus-lo&fsig=7e1214cff8a4c7dffef134ca8a52e880&id=1447643114&stream=1&ts=1521207420.0"
+                        }
+                      }
+                    },
+                    "audio_url_hash": {
+                      "$ref": "#/components/schemas/URLHints"
+                    },
+                    "tracks": {
+                      "type": "array",
+                      "description": "list of track metadata, unfortunately without the streaming URL",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "example": "The League of Frightened Men"
+                          },
+                          "is_purchasable": {
+                            "type": "boolean"
+                          },
+                          "label": {
+                            "type": "string",
+                            "example": "Western Vinyl"
+                          },
+                          "url_hints": {
+                            "$ref": "#/components/schemas/URLHints"
+                          },
+                          "album_url": {
+                            "$ref": "#/components/schemas/URLHints"
+                          },
+                          "location_text": {
+                            "type": "string",
+                            "example": "Philadelphia, Pennsylvania"
+                          },
+                          "album_id": {
+                            "$ref": "#/components/schemas/AlbumID"
+                          },
+                          "track_id": {
+                            "$ref": "#/components/schemas/TrackID"
+                          },
+                          "track_art_id": {
+                            "$ref": "#/components/schemas/ArtworkID"
+                          },
+                          "track_url": {
+                            "type": "string",
+                            "example": "http://lushlifemedia.bandcamp.com/track/the-league-of-frightened-men"
+                          },
+                          "artist": {
+                            "type": "string",
+                            "example": "Lushlife"
+                          },
+                          "is_preorder": {
+                            "type": "boolean"
+                          },
+                          "price": {
+                            "type": "number"
+                          },
+                          "merch_ids": {
+                            "$ref": "#/components/schemas/MerchIDs"
+                          },
+                          "currency": {
+                            "$ref": "#/components/schemas/Currency"
+                          },
+                          "band_id": {
+                            "$ref": "#/components/schemas/ArtistID"
+                          },
+                          "bio_image_id": {
+                            "$ref": "#/components/schemas/ArtworkID"
+                          },
+                          "package_image_ids": {
+                            "type": "array",
+                            "description": "no idea",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "timecode": {
+                            "type": "number"
+                          },
+                          "is_set_price": {
+                            "type": "boolean"
+                          },
+                          "require_email": {
+                            "type": "boolean"
+                          },
+                          "url": {
+                            "type": "string",
+                            "format": "url",
+                            "example": "http://lushlifemedia.bandcamp.com/album/no-dead-languages"
+                          },
+                          "album_title": {
+                            "type": "string",
+                            "example": "No Dead Languages"
+                          }
+                        }
+                      }
+                    },
+                    "image_caption": {
+                      "$ref": "#/components/schemas/ImageCaption"
+                    },
+                    "stream_infos": {
+                      "type": "object",
+                      "properties": {
+                        "metadata_crc": {
+                          "type": "string"
+                        },
+                        "encodings_id": {
+                          "type": "integer",
+                          "example": 3474371285
+                        },
+                        "format": {
+                          "type": "integer",
+                          "example": 101
+                        },
+                        "file_id": {
+                          "type": "integer",
+                          "example": 3596572293
+                        }
+                      }
+                    },
+                    "date": {
+                      "type": "string",
+                      "description": "a formatted timestamp",
+                      "example": "27 Sep 2016 00:00:00 GMT"
+                    },
+                    "published_date": {
+                      "type": "string",
+                      "description": "a formatted timestamp",
+                      "example": "27 Sep 2016 00:00:00 GMT"
+                    },
+                    "dark_mode": {
+                      "type": "string"
                     }
                   }
                 }
@@ -1608,9 +1906,10 @@
           "item_type": {
             "type": "string",
             "enum": [
-              "a"
+              "a",
+              "t"
             ],
-            "description": "the type can be `a`lbum"
+            "description": "the type can be `a`lbum, `t`rack"
           },
           "slug": {
             "type": "string",
@@ -1646,6 +1945,15 @@
       "Location": {
         "type": "string",
         "example": "Switzerland"
+      },
+      "ShowDescription": {
+        "type": "string",
+        "example": "Featuring interviews with Sweden's mysterious Goat, and Reginald Omas Mamode IV of London’s prolific 22a crew. "
+      },
+      "ImageCaption": {
+        "type": "string",
+        "description": "HTML formatted caption",
+        "example": "Hosted by <a href=\"http://bandcamp.com/andrewjervis\">Andrew Jervis</a>. Illustration of <a href=\"http://goat.bandcamp.com/\">Goat</a> by <a href=\"http:/ /elhuervo.tumblr.com\">Niklas Åkerblad</a>."
       },
       "UnknownProperty": {
         "type": "string",
