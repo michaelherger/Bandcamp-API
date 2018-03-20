@@ -402,11 +402,11 @@
         }
       }
     },
-    "/fan/2/collection_summary": {
+    "/api/fan/2/collection_summary": {
       "get": {
-        "summary": "get the user's \"Music Feed\"",
+        "summary": "get a rough summary of the user's collection (items bought etc.)",
         "tags": [
-          "To be figured out"
+          "Fan Collection"
         ],
         "parameters": [
           {
@@ -415,12 +415,87 @@
               "type": "string"
             },
             "name": "Cookie",
-            "example": "__utma=241114640.1402729518.1499081724.1519889216.1520672370.21; __utmb=241114640.2.10.1520672370; __utmc=241114640; __utmz=241114640.1519881502.19.8.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __utmt=1; session=1%09t%3A1520672367%09bp%3A1%09r%3A%5B%22nilZ0f0x1520672367%22%2C%2239731231s0a793714377x1519890154%22%2C%2239731231s0i2240734681x1519890153%22%5D; BACKENDID=bender01-3; fan_visits=10236z4679z188671z482972; identity=6%0909ddd7b4f6eca8250cedc5f42546bd39%09%7B%22id%22%3A1712700664%2C%22h1%22%3A%220a36b7aa8ce0b80c36b86d5bc4d0e735%22%2C%22ex%22%3A0%7D; logout=%7B%22username%22%3A%22paypal%40herger.net%22%7D; want_https=1; __qca=P0-412173266-1499081724027; client_id=D38AB1D81E70CC68504277E9FE450FABC8D939D402E73A4D4A8212974965AAF4"
+            "example": "identity=6%0909ddd7b4f6eca8250cedc5f42546bd39%09%7B%22id%22%3A1712700664%2C%22h1%22%3A%220a36b7aa8ce0b80c36b86d5bc4d0e735%22%2C%22ex%22%3A0%7D;"
           }
         ],
         "responses": {
           "200": {
-            "description": "the feed"
+            "description": "a summary of the user's collection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fan_id": {
+                      "$ref": "#/components/schemas/FanID"
+                    },
+                    "collection_summary": {
+                      "type": "object",
+                      "properties": {
+                        "fan_id": {
+                          "$ref": "#/components/schemas/FanID"
+                        },
+                        "tralbum_lookup": {
+                          "type": "object",
+                          "properties": {
+                            "<item id>": {
+                              "type": "object",
+                              "description": "the key is something like 'a1234', where 'a' is for albums - see ItemType?",
+                              "properties": {
+                                "item_id": {
+                                  "anyOf": [
+                                    {
+                                      "$ref": "#/components/schemas/AlbumID"
+                                    },
+                                    {
+                                      "$ref": "#/components/schemas/TrackID"
+                                    }
+                                  ]
+                                },
+                                "band_id": {
+                                  "$ref": "#/components/schemas/ArtistID"
+                                },
+                                "purchased": {
+                                  "type": "string",
+                                  "description": "formatted timestamp of purchase, or null if not purchased (wishlist?)"
+                                },
+                                "item_type": {
+                                  "$ref": "#/components/schemas/ItemType"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "follows": {
+                          "type": "object",
+                          "properties": {
+                            "following": {
+                              "type": "object",
+                              "properties": {
+                                "<fan id>": {
+                                  "description": "keys are the followed fans/bands' IDs",
+                                  "type": "boolean"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "url": {
+                          "type": "string",
+                          "format": "URL",
+                          "description": "the fan's home on bandcamp.com",
+                          "example": "https://bandcamp.com/michaelherger"
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "michaelherger"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -538,7 +613,11 @@
                               "description": "the stream's items",
                               "type": "array",
                               "items": {
-                                "$ref": "#/components/schemas/Track"
+                                "anyOf": [
+                                  {
+                                    "$ref": "#/components/schemas/Track"
+                                  }
+                                ]
                               }
                             }
                           }
