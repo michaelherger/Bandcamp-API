@@ -287,7 +287,9 @@ paths:
                         properties:
                           <item id>:
                             type: object
-                            description: the key is something like 'a1234', where 'a' is for albums - see ItemType?
+                            description: >-
+                              the key is something like 'a1234', where 'a' is
+                              for albums - see ItemType?
                             properties:
                               item_id:
                                 anyOf:
@@ -297,7 +299,9 @@ paths:
                                 $ref: '#/components/schemas/ArtistID'
                               purchased:
                                 type: string
-                                description: formatted timestamp of purchase, or null if not purchased (wishlist?)
+                                description: >-
+                                  formatted timestamp of purchase, or null if
+                                  not purchased (wishlist?)
                               item_type:
                                 $ref: '#/components/schemas/ItemType'
                       follows:
@@ -313,7 +317,7 @@ paths:
                         type: string
                         format: URL
                         description: the fan's home on bandcamp.com
-                        example: https://bandcamp.com/michaelherger
+                        example: 'https://bandcamp.com/michaelherger'
                       username:
                         type: string
                         example: michaelherger
@@ -700,19 +704,19 @@ paths:
                   - type: object
                     properties:
                       band_id:
-                        $ref: '#/components/parameters/ArtistID'
+                        $ref: '#/components/schemas/ArtistID'
                   - type: object
                     properties:
                       band_id:
-                        $ref: '#/components/parameters/ArtistID'
+                        $ref: '#/components/schemas/ArtistID'
                       track_id:
-                        $ref: '#/components/parameters/TrackID'
+                        $ref: '#/components/schemas/TrackID'
                   - type: object
                     properties:
                       band_id:
-                        $ref: '#/components/parameters/ArtistID'
+                        $ref: '#/components/schemas/ArtistID'
                       album_id:
-                        $ref: '#/components/parameters/AlbumID'
+                        $ref: '#/components/schemas/AlbumID'
   '/img/{type}{id}_{format}.jpg':
     get:
       summary: 'Endpoint on https://f0.bcbits.com/ to get various pieces of artwork.'
@@ -927,8 +931,7 @@ components:
       schema:
         type: string
       name: Cookie
-      example: >-
-        identity=6%0909ddd7b4f6eca8250cedc5f42546bd39%09%7B%22id%22%3A1712700664%2C%22h1%22%3A%220a36b7aa8ce0b80c36b86d5bc4d0e735%22%2C%22ex%22%3A0%7D;
+      example: identity=9%0909ddd7b4f6eca8250cedc5f42546bd39%09%7B%22id%22%3A1712700664%2C%22h1%22%3A%220a36b7aa8ce0b80c36b86d5bc4d0e735%22%2C%22ex%22%3A0%7D;
   requestBodies:
     FanCollectionBody:
       description: JSON data of yet to understand data
@@ -1300,8 +1303,8 @@ components:
                     $ref: '#/components/schemas/TrAlbumType'
                   tralbum_id:
                     oneOf:
-                      - $ref: '#/components/requestBodies/AlbumID'
-                      - $ref: '#/components/requestBodies/TrackID'
+                      - $ref: '#/components/schemas/AlbumID'
+                      - $ref: '#/components/schemas/TrackID'
         image_id:
           type: integer
           example: 878604
@@ -1434,28 +1437,28 @@ components:
                   type: object
                   properties:
                     currency:
-                      $ref: '#/components/requestBodies/Currency'
+                      $ref: '#/components/schemas/Currency'
                     has_digital_download:
                       type: boolean
                     album_title:
-                      $ref: '#/components/requestBodies/AlbumTitle'
+                      $ref: '#/components/schemas/AlbumTitle'
                     encodings_id:
                       allOf:
-                        - $ref: '#/components/requestBodies/UnknownProperty'
+                        - $ref: '#/components/schemas/UnknownProperty'
                         - type: number
                         - example: 18647555
                     track_id:
-                      $ref: '#/components/requestBodies/TrackID'
+                      $ref: '#/components/schemas/TrackID'
                     merch_ids:
                       $ref: '#/components/schemas/MerchIDs'
                     album_id:
-                      $ref: '#/components/requestBodies/AlbumID'
+                      $ref: '#/components/schemas/AlbumID'
                     duration:
                       type: number
                     title:
-                      $ref: '#/components/requestBodies/TrackTitle'
+                      $ref: '#/components/schemas/TrackTitle'
                     label_id:
-                      $ref: '#/components/requestBodies/UnknownProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     merch_sold_out:
                       type: boolean
                     price:
@@ -1463,11 +1466,11 @@ components:
                     has_lyrics:
                       type: boolean
                     art_id:
-                      $ref: '#/components/requestBodies/ArtworkID'
+                      $ref: '#/components/schemas/ArtworkID'
                     band_id:
-                      $ref: '#/components/requestBodies/ArtistID'
+                      $ref: '#/components/schemas/ArtistID'
                     label:
-                      $ref: '#/components/requestBodies/UnknownProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     track_num:
                       type: integer
                     is_purchasable:
@@ -1484,24 +1487,24 @@ components:
                     is_streamable:
                       type: boolean
                     band_name:
-                      $ref: '#/components/requestBodies/ArtistName'
+                      $ref: '#/components/schemas/ArtistName'
               items:
                 type: array
                 items:
                   type: object
                   properties:
                     currency:
-                      $ref: '#/components/requestBodies/Currency'
+                      $ref: '#/components/schemas/Currency'
                     has_digital_download:
                       type: boolean
                     album_title:
-                      $ref: '#/components/requestBodies/AlbumTitle'
+                      $ref: '#/components/schemas/AlbumTitle'
                     gift_recipient_name:
-                      $ref: '#/components/requestBodies/UnknownProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     featured_track_duration:
                       type: number
                     item_url:
-                      $ref: '#/components/requestBodies/AlbumURL'
+                      $ref: '#/components/schemas/AlbumURL'
                     url_hints:
                       $ref: '#/components/schemas/URLHints'
                     tralbum_type:
@@ -1517,31 +1520,31 @@ components:
                     merch_ids:
                       $ref: '#/components/schemas/MerchIDs'
                     album_id:
-                      $ref: '#/components/requestBodies/AlbumID'
+                      $ref: '#/components/schemas/AlbumID'
                     featured_track_encodings_id:
                       allOf:
-                        - $ref: '#/components/requestBodies/UnknwonProperty'
+                        - $ref: '#/components/schemas/UnknownProperty'
                         - type: integer
                     tralbum_id:
                       oneOf:
-                        - $ref: '#/components/requestBodies/AlbumID'
-                        - $ref: '#/components/requestBodies/TrackID'
+                        - $ref: '#/components/schemas/AlbumID'
+                        - $ref: '#/components/schemas/TrackID'
                     sale_item_id:
                       allOf:
-                        - $ref: '#/components/requestBodies/UnknwonProperty'
+                        - $ref: '#/components/schemas/UnknownProperty'
                         - type: integer
                     label_id:
                       allOf:
-                        - $ref: '#/components/requestBodies/UnknwonProperty'
+                        - $ref: '#/components/schemas/UnknownProperty'
                         - type: integer
                     band_location:
-                      $ref: '#/components/requestBodies/Location'
+                      $ref: '#/components/schemas/Location'
                     is_subscriber_only:
                       type: boolean
                     featured_track_url:
                       $ref: '#/components/schemas/StreamURL'
                     item_art_url:
-                      $ref: '#/components/requestBodies/ArtworkURL'
+                      $ref: '#/components/schemas/ArtworkURL'
                     hidden:
                       type: boolean
                       description: >-
@@ -1549,23 +1552,23 @@ components:
                         longer available?
                     merch_sold_out:
                       allOf:
-                        - $ref: '#/components/requestBodies/UnknwonProperty'
+                        - $ref: '#/components/schemas/UnknownProperty'
                         - type: boolean
                     price:
                       type: number
                     is_preorder:
                       type: boolean
                     package_details:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     item_title:
                       oneOf:
-                        - $ref: '#/components/requestBodies/ArtistName'
-                        - $ref: '#/components/requestBodies/AlbumTitle'
-                        - $ref: '#/components/requestBodies/TrackTitle'
+                        - $ref: '#/components/schemas/ArtistName'
+                        - $ref: '#/components/schemas/AlbumTitle'
+                        - $ref: '#/components/schemas/TrackTitle'
                     band_image_id:
-                      $ref: '#/components/requestBodies/ArtworkID'
+                      $ref: '#/components/schemas/ArtworkID'
                     gift_id:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     is_private:
                       type: boolean
                       description: >-
@@ -1574,18 +1577,18 @@ components:
                     featured_track_number:
                       type: integer
                     band_url:
-                      $ref: '#/components/requestBodies/ArtistURL'
+                      $ref: '#/components/schemas/ArtistURL'
                     item_art:
                       type: object
                       properties:
                         thumb_url:
-                          $ref: '#/components/requestBodies/ArtworkURL'
+                          $ref: '#/components/schemas/ArtworkURL'
                         art_id:
-                          $ref: '#/components/requestBodies/ArtworkID'
+                          $ref: '#/components/schemas/ArtworkID'
                         url:
-                          $ref: '#/components/requestBodies/ArtworkURL'
+                          $ref: '#/components/schemas/ArtworkURL'
                     item_art_ids:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     num_streamable_tracks:
                       type: integer
                     sale_item_type:
@@ -1594,61 +1597,61 @@ components:
                         - p
                       description: '`p`urchase?'
                     purchased:
-                      $ref: '#/components/requestBodies/Timestamp'
+                      $ref: '#/components/schemas/Timestamp'
                     added:
-                      $ref: '#/components/requestBodies/Timestamp'
+                      $ref: '#/components/schemas/Timestamp'
                     band_id:
-                      $ref: '#/components/requestBodies/ArtistID'
+                      $ref: '#/components/schemas/ArtistID'
                     label:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     release_count:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     featured_track_title:
-                      $ref: '#/components/requestBodies/TrackTitel'
+                      $ref: '#/components/schemas/TrackTitle'
                     index:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     is_set_price:
                       type: boolean
                     gift_sender_name:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     service_url_fragment:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     is_purchasable:
                       type: boolean
                     why:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     featured_track:
-                      $ref: '#/components/requestBodies/TrackID'
+                      $ref: '#/components/schemas/TrackID'
                     updated:
-                      $ref: '#/components/requestBodies/Timestamp'
+                      $ref: '#/components/schemas/Timestamp'
                     token:
                       type: string
                       example: '1505295591:793714377:a::'
                     releases:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     message_count:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     featured_track_is_custom:
                       type: boolean
                     genre_id:
                       type: integer
                     discount:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     require_email:
                       allOf:
-                        - $ref: '#/components/requestBodies/UnknwonProperty'
+                        - $ref: '#/components/schemas/UnknownProperty'
                         - type: boolean
                     gift_sender_note:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     service_name:
-                      $ref: '#/components/requestBodies/UnknwonProperty'
+                      $ref: '#/components/schemas/UnknownProperty'
                     is_giftable:
                       type: boolean
                     band_name:
-                      $ref: '#/components/requestBodies/ArtistName'
+                      $ref: '#/components/schemas/ArtistName'
                     also_collected_count:
                       allOf:
-                        - $ref: '#/components/requestBodies/UnknwonProperty'
+                        - $ref: '#/components/schemas/UnknownProperty'
                         - type: integer
                     item_type:
                       type: string
